@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { signIn } from '../actions/users'
+import { connect } from 'react-redux'
 
 class SignInPage extends Component {
     state = {
@@ -6,8 +8,13 @@ class SignInPage extends Component {
         password: ''
     }
 
-    handleSubmit = () => {
-
+    handleSubmit = (e) => {
+        e.preventDefault()
+        this.props.signIn({...this.state})
+        this.setState({
+            username: '',
+            password: ''
+        })
     }
 
     handleChange = (e) => {
@@ -17,13 +24,16 @@ class SignInPage extends Component {
     }
 
     render() {
+
+        const {username, password} = this.state
+
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-                    <label for='username'>Username</label>
-                    <input type='text' name='username' onChange={this.handleChange}/>
-                    <label for='password'>Password</label>
-                    <input type='password' name='password' onChange={this.handleChange}/>
+                    <label>Username</label>
+                    <input type='text' name='username' onChange={this.handleChange} value={username}/>
+                    <label>Password</label>
+                    <input type='password' name='password' onChange={this.handleChange} value={password}/>
                     <button> Sign In</button>
                 </form>
             </div>
@@ -31,5 +41,9 @@ class SignInPage extends Component {
     }
 }
 
-export default SignInPage
+const mapDispatchtoProps = {
+    signIn
+}
+
+export default connect(null, mapDispatchtoProps)(SignInPage)
 
