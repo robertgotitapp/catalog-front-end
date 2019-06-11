@@ -1,5 +1,5 @@
 import { SIGN_IN, SIGN_UP, SIGN_OUT } from '../utils/const';
-import post from '../utils/requests';
+import { post } from '../utils/requests';
 
 export function signUp(user) {
   return {

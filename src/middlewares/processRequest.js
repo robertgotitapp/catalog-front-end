@@ -14,7 +14,7 @@ const processRequest = store => next => (action) => {
     .catch((err) => {
       next({
         type: FAILED_ACTION,
-        payload: err,
+        error: err,
       });
     });
 };

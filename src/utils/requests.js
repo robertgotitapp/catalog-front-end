@@ -1,4 +1,4 @@
-async function post(endpoint, data) {
+export async function post(endpoint, data) {
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
 
@@ -16,4 +16,15 @@ async function post(endpoint, data) {
   return response.json();
 }
 
-export default post;
+export async function get(endpoint) {
+  const options = {
+    method: 'GET',
+    mode: 'cors',
+  };
+
+  const response = await fetch(endpoint, options);
+  const { status } = response;
+
+  if (status !== 200) { throw response.json(); }
+  return response.json();
+}
