@@ -1,11 +1,11 @@
-import logger from './logger'
-import processRequest from './processRequest'
-import thunk from 'redux-thunk'
-import { applyMiddleware } from 'redux'
+import thunk from 'redux-thunk';
+import { applyMiddleware } from 'redux';
+import logger from './logger';
+import processRequest from './processRequest';
 
-export default applyMiddleware (
-  thunk, 
+export default applyMiddleware(
+  thunk,
   processRequest,
   logger,
 
-)
+);

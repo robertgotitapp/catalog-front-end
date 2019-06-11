@@ -1,18 +1,19 @@
-export async function post(endpoint, data) {
-    const headers = new Headers()
-    headers.append('Content-Type', 'application/json')
+async function post(endpoint, data) {
+  const headers = new Headers();
+  headers.append('Content-Type', 'application/json');
 
-    const options = {
-        method: 'POST',
-        mode: 'cors',
-        headers,
-        body: JSON.stringify(data)
-    }
-    
-    const response = await fetch(endpoint, options)
-    const status = response.status
+  const options = {
+    method: 'POST',
+    mode: 'cors',
+    headers,
+    body: JSON.stringify(data),
+  };
 
-    if (!(status === 200 || status === 201))
-        throw response.json()
-    return response.json()
+  const response = await fetch(endpoint, options);
+  const { status } = response;
+
+  if (!(status === 200 || status === 201)) { throw response.json(); }
+  return response.json();
 }
+
+export default post;
