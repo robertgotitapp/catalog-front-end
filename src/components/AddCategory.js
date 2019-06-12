@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import { addCategory } from '../actions/categories';
 
 class AddCategory extends Component {
@@ -16,7 +18,7 @@ class AddCategory extends Component {
 
     handleSubmit = (e) => {
       e.preventDefault();
-      this.props.addCategory({ ...this.state });
+      this.props.addCategory({ ...this.state }, this.props.users.access_token);
     }
 
     render() {
@@ -24,20 +26,32 @@ class AddCategory extends Component {
 
       return (
         <div>
-          <form onSubmit={this.handleSubmit}>
-            <label>Category Name</label>
-            <input type="text" name="name" onChange={this.handleChange} value={name} />
-            <label>Category Description</label>
-            <input type="text" name="description" onChange={this.handleChange} value={description} />
-            <button type="submit"> Add Category </button>
-          </form>
+          <Form onSubmit={this.handleSubmit}>
+            <Form.Group>
+              <Form.Label>Category Name</Form.Label>
+              <Form.Control type="text" name="name" onChange={this.handleChange} value={name} />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Category Description</Form.Label>
+              <Form.Control type="text" name="description" onChange={this.handleChange} value={description} />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </Form>
         </div>
       );
     }
+}
+
+function mapStateToProps({ users }) {
+  return {
+    users,
+  };
 }
 
 const mapDispatchtoProps = {
   addCategory,
 };
 
-export default connect(null, mapDispatchtoProps)(AddCategory);
+export default connect(mapStateToProps, mapDispatchtoProps)(AddCategory);

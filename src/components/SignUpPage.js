@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { signUp } from '../actions/users';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import { Redirect } from 'react-router-dom';
+import { signUp, signIn } from '../actions/users';
+import {
+  SIGN_UP_SUCCESS, SIGN_UP_FAILED, SIGN_IN_SUCCESS, SIGN_IN_FAILED,
+} from '../utils/const';
 
 class SignUpPage extends Component {
     state = {
@@ -8,17 +14,31 @@ class SignUpPage extends Component {
       password: '',
       name: '',
       email: '',
+      toHome: false,
+      toSignUp: false,
     }
 
     handleSubmit = (e) => {
+      const {
+        username, password, name, email,
+      } = this.state;
+
       e.preventDefault();
-      this.props.signUp({ ...this.state });
-      this.setState({
-        username: '',
-        password: '',
-        name: '',
-        email: '',
-      });
+      this.props.signUp({
+        username, password, name, email,
+      })
+        .then((res) => {
+          if (res.actionType === SIGN_UP_SUCCESS) {
+            this.props.signIn({ username, password })
+              .then((nextRes) => {
+                if (nextRes.actionType === SIGN_IN_SUCCESS) {
+                  this.setState(prevState => ({ ...prevState, toHome: true }));
+                } else {
+                  this.setState(prevState => ({ ...prevState, toSignUp: true }));
+                }
+              });
+          }
+        });
     }
 
     handleChange = (e) => {
@@ -29,29 +49,46 @@ class SignUpPage extends Component {
 
     render() {
       const {
-        username, password, name, email,
+        username, password, name, email, toHome, toSignUp,
       } = this.state;
+
+      if (toHome) {
+        return <Redirect to='/' />;
+      }
+      if (toSignUp) {
+        return <Redirect to='/signup' />;
+      }
 
       return (
         <div>
-          <form onSubmit={this.handleSubmit}>
-            <label>Username</label>
-            <input type="text" name="username" onChange={this.handleChange} value={username} />
-            <label>Password</label>
-            <input type="password" name="password" onChange={this.handleChange} value={password} />
-            <label>Email</label>
-            <input type="text" name="email" onChange={this.handleChange} value={email} />
-            <label>Name</label>
-            <input type="text" name="name" onChange={this.handleChange} value={name} />
-            <button type="submit"> Sign Up </button>
-          </form>
+          <Form onSubmit={this.handleSubmit}>
+            <Form.Group>
+              <Form.Label>Username</Form.Label>
+              <Form.Control type="text" name="username" onChange={this.handleChange} value={username} />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" name="password" onChange={this.handleChange} value={password} />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Email</Form.Label>
+              <Form.Control type="text" name="email" onChange={this.handleChange} value={email} />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Name</Form.Label>
+              <Form.Control type="text" name="name" onChange={this.handleChange} value={name} />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </Form>
         </div>
       );
     }
 }
 
 const mapDispatchtoProps = {
-  signUp,
+  signUp, signIn,
 };
 
 export default connect(null, mapDispatchtoProps)(SignUpPage);

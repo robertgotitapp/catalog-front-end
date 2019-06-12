@@ -1,7 +1,17 @@
 export const SIGN_UP = 'SIGN_UP';
+export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
+export const SIGN_UP_FAILED = 'SIGN_UP_FAILED';
 export const SIGN_OUT = 'SIGN_OUT';
 export const SIGN_IN = 'SIGN_IN';
 export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS';
+export const SIGN_IN_FAILED = 'SIGN_IN_FAILED';
 export const ADD_CATEGORY = 'ADD_CATEGORY';
 export const ADD_CATEGORY_SUCCESS = 'ADD_CATEGORY_SUCCESS';
 export const GET_CATEGORIES = 'GET_CATEGORIES';
+export const ADD_ITEM = 'ADD_ITEM';
+export const ADD_ITEM_SUCCESS = 'ADD_ITEM_SUCCESS';
+export const GET_ITEMS = 'GET_ITEMS';
+export const UPDATE_ITEM = 'UPDATE_ITEM';
+export const UPDATE_ITEM_SUCCESS = 'UPDATE_ITEM_SUCCESS';
+export const DELETE_ITEM = 'DELETE_ITEM';
+export const DELETE_ITEM_SUCCESS = 'DELETE_ITEM_SUCCESS';

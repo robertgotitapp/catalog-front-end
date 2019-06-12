@@ -1,10 +1,10 @@
 import { ADD_CATEGORY, GET_CATEGORIES } from '../utils/const';
 import { post, get } from '../utils/requests';
 
-export function addCategory(category) {
+export function addCategory(category, accessToken) {
   return {
     type: ADD_CATEGORY,
-    promise: post('http://127.0.0.1:5000/categories', category),
+    promise: post('http://127.0.0.1:5000/categories', accessToken, category),
   };
 }
 
