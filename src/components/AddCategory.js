@@ -44,9 +44,9 @@ class AddCategory extends Component {
     }
 }
 
-function mapStateToProps({ users }) {
+function mapStateToProps({ usersReducer }) {
   return {
-    users,
+    users: usersReducer,
   };
 }
 

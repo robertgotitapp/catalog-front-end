@@ -19,9 +19,9 @@ class CategoryList extends Component {
   }
 }
 
-function mapStateToProps({ categories }) {
+function mapStateToProps({ categoriesReducer }) {
   return {
-    categories,
+    categories: categoriesReducer,
   };
 }
 

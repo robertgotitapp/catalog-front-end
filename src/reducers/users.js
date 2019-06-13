@@ -1,6 +1,6 @@
 import { UsersAction } from '../utils/const';
 
-export default function users(state = { access_token: null }, action) {
+export default function usersReducer(state = { access_token: null }, action) {
   switch (action.type) {
     case UsersAction.SIGN_IN_SUCCESS:
       return action.payload;
