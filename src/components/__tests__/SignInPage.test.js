@@ -33,7 +33,6 @@ describe('components/SignInPage', () => {
 
   it('should trigger handler when form is submited', () => {
     container.instance().handleSubmit = jest.fn();
-    container.update();
     container.instance().forceUpdate();
     const form = container.find(Form);
     form.simulate('submit');

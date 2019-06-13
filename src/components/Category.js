@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-class Category extends Component {
+export class Category extends Component {
   render() {
     return (
       <div>
-        This is Category
+        {this.props.category.name}
       </div>
     );
   }
 }
 
-export default Category;
+function mapStateToProps({ categoriesReducer }, { id }) {
+  return {
+    category: categoriesReducer.categories[id],
+  };
+}
+
+export default connect(mapStateToProps)(Category);

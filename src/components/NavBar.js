@@ -14,7 +14,7 @@ export class NavBar extends Component {
     render() {
       return (
         <div>
-          <Navbar bg="light" variant="light">
+          <Navbar bg="dark" variant="dark">
             <Navbar.Brand>Catalog</Navbar.Brand>
             {
                   this.props.users.access_token !== null
@@ -56,8 +56,8 @@ function mapStateToProps({ usersReducer }) {
   };
 }
 
-const mapDispatchtoProps = {
+const mapDispatchToProps = {
   signOut,
 };
 
-export default connect(mapStateToProps, mapDispatchtoProps)(NavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

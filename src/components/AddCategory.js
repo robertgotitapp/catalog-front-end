@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { addCategory } from '../actions/categories';
 
-class AddCategory extends Component {
+export class AddCategory extends Component {
     state = {
       name: '',
       description: '',
@@ -50,8 +50,8 @@ function mapStateToProps({ usersReducer }) {
   };
 }
 
-const mapDispatchtoProps = {
+const mapDispatchToProps = {
   addCategory,
 };
 
-export default connect(mapStateToProps, mapDispatchtoProps)(AddCategory);
+export default connect(mapStateToProps, mapDispatchToProps)(AddCategory);

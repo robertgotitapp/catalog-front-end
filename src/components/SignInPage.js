@@ -58,8 +58,8 @@ export class SignInPage extends Component {
     }
 }
 
-const mapDispatchtoProps = {
+const mapDispatchToProps = {
   signIn,
 };
 
-export default connect(null, mapDispatchtoProps)(SignInPage);
+export default connect(null, mapDispatchToProps)(SignInPage);

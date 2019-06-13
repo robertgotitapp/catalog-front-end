@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/AddCategory should render correctly 1`] = `
+<div>
+  <Form
+    inline={false}
+    onSubmit={[Function]}
+  >
+    <FormGroup>
+      <FormLabel
+        column={false}
+        srOnly={false}
+      >
+        Category Name
+      </FormLabel>
+      <FormControl
+        name="name"
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
+    </FormGroup>
+    <FormGroup>
+      <FormLabel
+        column={false}
+        srOnly={false}
+      >
+        Category Description
+      </FormLabel>
+      <FormControl
+        name="description"
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
+    </FormGroup>
+    <Button
+      active={false}
+      disabled={false}
+      type="submit"
+      variant="primary"
+    >
+      Submit
+    </Button>
+  </Form>
+</div>
+`;
