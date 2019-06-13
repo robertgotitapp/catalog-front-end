@@ -4,11 +4,9 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Redirect } from 'react-router-dom';
 import { signUp, signIn } from '../actions/users';
-import {
-  SIGN_UP_SUCCESS, SIGN_UP_FAILED, SIGN_IN_SUCCESS, SIGN_IN_FAILED,
-} from '../utils/const';
+import { UsersAction } from '../utils/const';
 
-class SignUpPage extends Component {
+export class SignUpPage extends Component {
     state = {
       username: '',
       password: '',
@@ -28,10 +26,10 @@ class SignUpPage extends Component {
         username, password, name, email,
       })
         .then((res) => {
-          if (res.actionType === SIGN_UP_SUCCESS) {
+          if (res.actionType === UsersAction.SIGN_UP_SUCCESS) {
             this.props.signIn({ username, password })
               .then((nextRes) => {
-                if (nextRes.actionType === SIGN_IN_SUCCESS) {
+                if (nextRes.actionType === UsersAction.SIGN_IN_SUCCESS) {
                   this.setState(prevState => ({ ...prevState, toHome: true }));
                 } else {
                   this.setState(prevState => ({ ...prevState, toSignUp: true }));

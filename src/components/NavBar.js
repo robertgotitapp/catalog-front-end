@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signOut } from '../actions/users';
 
-class NavBar extends Component {
+export class NavBar extends Component {
     handleSignOut = (e) => {
       e.preventDefault();
       this.props.signOut();

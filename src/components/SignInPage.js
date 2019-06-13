@@ -4,9 +4,9 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Redirect } from 'react-router-dom';
 import { signIn } from '../actions/users';
-import { SIGN_IN_SUCCESS, SIGN_IN_FAILED } from '../utils/const';
+import { UsersAction } from '../utils/const';
 
-class SignInPage extends Component {
+export class SignInPage extends Component {
     state = {
       username: '',
       password: '',
@@ -19,7 +19,7 @@ class SignInPage extends Component {
       e.preventDefault();
       this.props.signIn({ username, password }, null)
         .then((res) => {
-          if (res.actionType === SIGN_IN_SUCCESS) {
+          if (res.actionType === UsersAction.SIGN_IN_SUCCESS) {
             this.setState(prevState => ({ ...prevState, toHome: true }));
           }
         });
@@ -49,7 +49,7 @@ class SignInPage extends Component {
               <Form.Label>Password</Form.Label>
               <Form.Control type="password" name="password" onChange={this.handleChange} value={password} />
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" name="submit" type="submit">
               Submit
             </Button>
           </Form>

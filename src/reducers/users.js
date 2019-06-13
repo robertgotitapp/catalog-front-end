@@ -1,10 +1,10 @@
-import { SIGN_IN_SUCCESS, SIGN_OUT } from '../utils/const';
+import { UsersAction } from '../utils/const';
 
 export default function users(state = { access_token: null }, action) {
   switch (action.type) {
-    case SIGN_IN_SUCCESS:
+    case UsersAction.SIGN_IN_SUCCESS:
       return action.payload;
-    case SIGN_OUT:
+    case UsersAction.SIGN_OUT:
       return {
         access_token: action.access_token,
       };

@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/SignInPage should render correctly 1`] = `
+<div>
+  <Form
+    inline={false}
+    onSubmit={[Function]}
+  >
+    <FormGroup>
+      <FormLabel
+        column={false}
+        srOnly={false}
+      >
+        Username
+      </FormLabel>
+      <FormControl
+        name="username"
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
+    </FormGroup>
+    <FormGroup>
+      <FormLabel
+        column={false}
+        srOnly={false}
+      >
+        Password
+      </FormLabel>
+      <FormControl
+        name="password"
+        onChange={[Function]}
+        type="password"
+        value=""
+      />
+    </FormGroup>
+    <Button
+      active={false}
+      disabled={false}
+      name="submit"
+      type="submit"
+      variant="primary"
+    >
+      Submit
+    </Button>
+  </Form>
+</div>
+`;
