@@ -1,6 +1,8 @@
 import { CategoriesAction } from '../utils/const';
 
-export default function categoriesReducer(state = { categories: {} }, action) {
+const initialState = { categories: {}, currentCategory: null };
+
+export default function categoriesReducer(state = initialState, action) {
   switch (action.type) {
     case CategoriesAction.ADD_CATEGORY_SUCCESS:
       // fixing problem with id not consitent
@@ -9,7 +11,15 @@ export default function categoriesReducer(state = { categories: {} }, action) {
         [action.payload.id]: action.payload,
       };
     case CategoriesAction.GET_CATEGORIES_SUCCESS:
-      return { categories: action.payload.categories };
+      return {
+        ...state,
+        categories: action.payload.categories,
+      };
+    case CategoriesAction.SELECT_CURRENT_CATEGORY:
+      return {
+        ...state,
+        currentCategory: action.payload.currentCategory,
+      };
     default:
       return state;
   }

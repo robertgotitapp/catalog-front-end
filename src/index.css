@@ -16,3 +16,8 @@ code {
   padding-left: 1rem;
   padding-right: 1rem;
 }
+
+.item-card {
+  width: 80%;
+  margin: auto;
+}

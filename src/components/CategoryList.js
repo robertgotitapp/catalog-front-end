@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getCategories } from '../actions/categories';
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+import ListGroupItem from 'react-bootstrap/ListGroupItem';
+import { Link } from 'react-router-dom';
+import { getCategories, selectCurrentCategory } from '../actions/categories';
 import Category from './Category';
 import { CategoriesAction } from '../utils/const';
 
@@ -23,10 +27,22 @@ export class CategoryList extends Component {
 
     return (
       <div>
-        { this.props.categoriesIds.map(id => (
-          <Category key={id} id={id} />
-        ))
+        <Card>
+          <Card.Body>
+            <Card.Title>Categories</Card.Title>
+          </Card.Body>
+        </Card>
+        <ListGroup>
+          { this.props.categoriesIds.map(id => (
+            <ListGroupItem key={id} name={id}>
+              <Category id={id} />
+            </ListGroupItem>
+          ))
         }
+        </ListGroup>
+        <Link to='/newcategory'>
+          Add Category
+        </Link>
       </div>
     );
   }
@@ -41,6 +57,7 @@ function mapStateToProps({ categoriesReducer }) {
 
 const mapDispatchToProps = {
   getCategories,
+  selectCurrentCategory,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryList);

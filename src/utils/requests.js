@@ -49,7 +49,7 @@ export async function update(endpoint, accessToken, data) {
   return response.json();
 }
 
-export async function remove(endpoint, accessToken, data) {
+export async function remove(endpoint, accessToken) {
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
   if (accessToken !== null) { headers.append('Authorization', `JWT ${accessToken}`); }
