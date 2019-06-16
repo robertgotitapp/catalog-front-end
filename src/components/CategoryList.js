@@ -33,9 +33,9 @@ export class CategoryList extends Component {
           </Card.Body>
         </Card>
         <ListGroup>
-          { this.props.categoriesIds.map(id => (
-            <ListGroupItem key={id} name={id}>
-              <Category id={id} />
+          { this.props.categories.map(category => (
+            <ListGroupItem key={category.id}>
+              <Category category={category} />
             </ListGroupItem>
           ))
         }
@@ -49,9 +49,8 @@ export class CategoryList extends Component {
 }
 
 function mapStateToProps({ categoriesReducer }) {
-  const categoriesIds = Object.keys(categoriesReducer.categories);
   return {
-    categoriesIds,
+    categories: categoriesReducer.categories,
   };
 }
 

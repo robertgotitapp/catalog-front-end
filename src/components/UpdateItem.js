@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { addItem } from '../actions/items';
+import { updateItem } from '../actions/items';
 
-export class AddItem extends Component {
+export class UpdateItem extends Component {
     state = {
-      name: '',
-      price: 0,
-      description: '',
+      name: this.props.item.name,
+      price: this.props.item.price,
+      description: this.props.item.description,
     }
 
     handleChange = (e) => {
@@ -19,7 +19,10 @@ export class AddItem extends Component {
 
     handleSubmit = (e) => {
       e.preventDefault();
-      this.props.addItem(this.props.users.access_token, this.props.categoryId, { ...this.state });
+      this.props.updateItem(
+        this.props.users.access_token,
+        this.props.item.category_id, { ...this.state },
+      );
     }
 
     render() {
@@ -38,7 +41,12 @@ export class AddItem extends Component {
             </Form.Group>
             <Form.Group>
               <Form.Label>Item Description</Form.Label>
-              <Form.Control type="text" name="description" onChange={this.handleChange} value={description} />
+              <Form.Control
+                type="text"
+                name="description"
+                onChange={this.handleChange}
+                value={description}
+              />
             </Form.Group>
             <Button variant="primary" type="submit">
               Submit
@@ -49,14 +57,17 @@ export class AddItem extends Component {
     }
 }
 
-function mapStateToProps({ usersReducer }) {
+function mapStateToProps({ itemsReducer, usersReducer }, { match }) {
+  const itemId = match.params.id;
   return {
+    itemId,
     users: usersReducer,
+    item: itemsReducer.items[itemId],
   };
 }
 
 const mapDispatchtoProps = {
-  addItem,
+  updateItem,
 };
 
-export default connect(mapStateToProps, mapDispatchtoProps)(AddItem);
+export default connect(mapStateToProps, mapDispatchtoProps)(UpdateItem);

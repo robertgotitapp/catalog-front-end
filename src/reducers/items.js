@@ -1,9 +1,14 @@
 import { ItemsAction } from '../utils/const';
 
-export default function itemsReducer(state = { items: {} }, action) {
+const initialState = { items: {} };
+
+export default function itemsReducer(state = initialState, action) {
   switch (action.type) {
     case ItemsAction.GET_ITEMS_SUCCESS:
-      return { items: action.payload.items };
+      return {
+        ...state,
+        items: action.payload.items,
+      };
     case ItemsAction.ADD_ITEM_SUCCESS:
       // fixing problem with id not consitent
       return {

@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Card from 'react-bootstrap/Card';
+import { Link } from 'react-router-dom';
 import Item from './Item';
 
 export class ItemList extends Component {
-  // state = { loading: true };
-
   render() {
-    // if (this.state.loading === true) {
-    //   return <div className='loader'> ...loading </div>;
-    // }
-
     return (
       <div>
         <Card>
@@ -18,7 +13,9 @@ export class ItemList extends Component {
             <Card.Title>Items</Card.Title>
           </Card.Body>
           { this.props.itemIds.map(id => (
-            <Item key={id} id={id} />
+            <Link key={id} to={`/items/${id}`}>
+              <Item id={id} />
+            </Link>
           ))
           }
         </Card>
@@ -28,9 +25,8 @@ export class ItemList extends Component {
 }
 
 function mapStateToProps({ itemsReducer }) {
-  const itemIds = Object.keys(itemsReducer.items);
   return {
-    itemIds,
+    itemIds: Object.keys(itemsReducer.items),
   };
 }
 

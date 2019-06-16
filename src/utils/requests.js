@@ -58,7 +58,6 @@ export async function remove(endpoint, accessToken) {
     method: 'DELETE',
     mode: 'cors',
     headers,
-    body: JSON.stringify(data),
   };
 
   const response = await fetch(endpoint, options);

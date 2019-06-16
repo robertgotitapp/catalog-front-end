@@ -4,7 +4,7 @@ import { getItems } from '../actions/items';
 
 export class Category extends Component {
   viewCategory = () => {
-    this.props.getItems(this.props.id);
+    this.props.getItems(this.props.category.id, 0, 100);
   };
 
   render() {
@@ -18,16 +18,8 @@ export class Category extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  console.log({ categoriesReducer });
-  return {
-    category: {},
-    state,
-  };
-};
-
 const mapDispatchToProps = {
   getItems,
 };
 
-export default connect(mapDispatchToProps, mapStateToProps)(Category);
+export default connect(null, mapDispatchToProps)(Category);
