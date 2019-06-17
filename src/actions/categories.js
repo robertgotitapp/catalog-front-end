@@ -17,9 +17,9 @@ export function getCategories(offset, limit) {
   };
 }
 
-export function selectCurrentCategory(selectedCategory) {
-  return {
-    type: CategoriesAction.SELECT_CURRENT_CATEGORY,
-    payload: { currentCategory: selectedCategory },
-  };
-}
+// export function selectCurrentCategory(selectedCategory) {
+//   return {
+//     type: CategoriesAction.SELECT_CURRENT_CATEGORY,
+//     payload: { currentCategory: selectedCategory },
+//   };
+// }

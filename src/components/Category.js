@@ -8,8 +8,6 @@ export class Category extends Component {
   };
 
   render() {
-    console.log('render');
-    console.log(this.props.state);
     return (
       <div onClick={this.viewCategory}>
         {this.props.category.name}

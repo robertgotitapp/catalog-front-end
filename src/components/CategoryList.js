@@ -3,10 +3,8 @@ import { connect } from 'react-redux';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import ListGroupItem from 'react-bootstrap/ListGroupItem';
-import { Link } from 'react-router-dom';
-import { getCategories, selectCurrentCategory } from '../actions/categories';
+import { getCategories } from '../actions/categories';
 import Category from './Category';
-import { CategoriesAction } from '../utils/const';
 
 export class CategoryList extends Component {
   state = { loading: true };
@@ -14,7 +12,7 @@ export class CategoryList extends Component {
   componentDidMount() {
     this.props.getCategories(0, 100)
       .then((res) => {
-        if (res.actionType === CategoriesAction.GET_CATEGORIES_SUCCESS) {
+        if (res.statusCode) {
           this.setState({ loading: false });
         }
       });
@@ -33,16 +31,13 @@ export class CategoryList extends Component {
           </Card.Body>
         </Card>
         <ListGroup>
-          { this.props.categories.map(category => (
-            <ListGroupItem key={category.id}>
-              <Category category={category} />
+          { Object.keys(this.props.categories).map(key => (
+            <ListGroupItem key={key}>
+              <Category category={this.props.categories[key]} />
             </ListGroupItem>
           ))
         }
         </ListGroup>
-        <Link to='/newcategory'>
-          Add Category
-        </Link>
       </div>
     );
   }
@@ -56,7 +51,6 @@ function mapStateToProps({ categoriesReducer }) {
 
 const mapDispatchToProps = {
   getCategories,
-  selectCurrentCategory,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryList);

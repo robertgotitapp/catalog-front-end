@@ -24,6 +24,12 @@ export class NavBar extends Component {
                           <Link to='/'>Home</Link>
                         </Nav.Item>
                         <Nav.Item className="navItem">
+                          <Link to='/newcategory'>Add Category</Link>
+                        </Nav.Item>
+                        <Nav.Item className="navItem">
+                          <Link to='/newitem'>Add Item</Link>
+                        </Nav.Item>
+                        <Nav.Item className="navItem">
                           <Link onClick={this.handleSignOut} to='/'>
                         Sign Out
                           </Link>

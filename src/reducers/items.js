@@ -16,9 +16,10 @@ export default function itemsReducer(state = initialState, action) {
         [action.payload.id]: action.payload,
       };
     case ItemsAction.UPDATE_ITEM_SUCCESS:
-      return state;
-    case ItemsAction.DELETE_ITEM_SUCCESS:
-      return state;
+      return {
+        ...state,
+        [action.payload.id]: action.payload,
+      };
     default:
       return state;
   }

@@ -19,7 +19,7 @@ export class UpdateItem extends Component {
 
     handleSubmit = (e) => {
       e.preventDefault();
-      this.props.updateItem(this.props.item.category_id, { ...this.state });
+      this.props.updateItem(this.props.item.category_id, this.props.item.id, { ...this.state });
     }
 
     render() {
@@ -54,12 +54,12 @@ export class UpdateItem extends Component {
     }
 }
 
-function mapStateToProps({ itemsReducer, usersReducer }, { match }) {
-  const itemId = match.params.id;
+function mapStateToProps({ itemsReducer }, { match }) {
+  const itemId = Number(match.params.id);
+  const selectedItem = Object.values(itemsReducer.items)
+    .find(item => item.id === itemId);
   return {
-    itemId,
-    users: usersReducer,
-    item: itemsReducer.items[itemId],
+    item: selectedItem,
   };
 }
 

@@ -10,6 +10,8 @@ import ItemDetail from './ItemDetail';
 import UpdateItem from './UpdateItem';
 
 class Main extends Component {
+  // Consider putting getAccessToken here or in NavBar
+
   render() {
     return (
       <div>
@@ -18,9 +20,9 @@ class Main extends Component {
         <Route path='/signup' component={SignUpPage} />
         <Route path='/newcategory' component={AddCategory} />
         <Route path='/newitem' component={AddItem} />
-        <Route path='/items/:id' component={ItemDetail} />
-        <Route path='/items/:id/update' component={UpdateItem} />
-        <Route path='/categories/:id/items/:pageNumber' component={Home} />
+        <Route exact path='/items/:id' component={ItemDetail} />
+        <Route exact path='/items/:id/update' component={UpdateItem} />
+        <Route exact path='/' component={Home} />
       </div>
     );
   }

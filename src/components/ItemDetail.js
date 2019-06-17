@@ -1,19 +1,34 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button';
-import { Link } from 'react-router-dom';
-import { updateItem, removeItem } from '../actions/items';
+import { Link, Redirect } from 'react-router-dom';
+import { removeItem, getItems } from '../actions/items';
+import { Item } from './Item';
 
 export class ItemDetail extends Component {
+  state = {
+    toHome: false,
+  }
+
   deleteItem = (e) => {
     e.preventDefault();
     this.props.removeItem(
       this.props.item.category_id,
       this.props.item.id,
-    );
+    )
+      .then((res) => {
+        if (res.statusCode) {
+          this.props.getItems(this.props.item.category_id, 0, 100);
+        }
+      });
+    this.setState({ toHome: true });
   }
 
   render() {
+    if (this.state.toHome) {
+      return <Redirect to='/' />;
+    }
+
     return (
       <div>
         <p>
@@ -27,28 +42,28 @@ export class ItemDetail extends Component {
           Description:
           {this.props.item.description}
         </p>
-        <Link to={`/items/${this.props.itemId}/update`}>
+        <Link to={`/items/${this.props.item.id}/update`}>
           Update
         </Link>
         <Button onClick={this.deleteItem}>
-            Remove
+          Remove
         </Button>
       </div>
     );
   }
 }
 
-function mapStateToProps({ itemsReducer, usersReducer }, { match }) {
-  const itemId = match.params.id;
+function mapStateToProps({ itemsReducer }, { match }) {
+  const itemId = Number(match.params.id);
+  const selectedItem = Object.values(itemsReducer.items)
+    .find(item => item.id === itemId);
   return {
-    itemId,
-    item: itemsReducer.items[itemId],
-    usersReducer,
+    item: selectedItem,
   };
 }
 
 const mapDispatchToProps = {
-  updateItem,
+  getItems,
   removeItem,
 };
 

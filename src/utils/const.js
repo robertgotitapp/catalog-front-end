@@ -37,3 +37,15 @@ export const HeadersType = {
   CONTENTTYPE: 'CONTENT-TYPE',
   AUTHORIZATION: 'AUTHORIZATION',
 };
+
+export const RequestStatusCode = {
+  SUCCESS: 1,
+  FAILED: 0,
+};
+
+export const RequestType = {
+  GET: 'GET',
+  POST: 'POST',
+  PUT: 'PUT',
+  DELETE: 'DELETE',
+};

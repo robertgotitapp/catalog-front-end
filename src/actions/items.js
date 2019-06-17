@@ -27,11 +27,15 @@ export function removeItem(categoryId, itemId) {
   };
 }
 
-export function updateItem(categoryId, item) {
+export function updateItem(categoryId, itemId, item) {
+  console.log(categoryId);
+  console.log(item);
   return {
     type: ItemsAction.UPDATE_ITEM,
-    promise: update(`http://127.0.0.1:5000/categories/${categoryId}/items/${itemId}`,
+    promise: update(
+      `http://127.0.0.1:5000/categories/${categoryId}/items/${itemId}`,
       [HeadersType.CONTENTTYPE, HeadersType.AUTHORIZATION],
-      item),
+      item,
+    ),
   };
 }

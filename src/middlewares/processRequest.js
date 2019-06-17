@@ -1,3 +1,5 @@
+import { RequestStatusCode } from '../utils/const';
+
 const processRequest = store => next => (action) => {
   if (!action.promise) { return next(action); }
 
@@ -11,7 +13,7 @@ const processRequest = store => next => (action) => {
         payload: result,
       });
       // Must return result for component to get the result
-      return { res: result, actionType: SUCCESS_ACTION };
+      return { res: result, statusCode: RequestStatusCode.SUCCESS };
     })
     .catch((err) => {
       next({
@@ -19,7 +21,7 @@ const processRequest = store => next => (action) => {
         error: err,
       });
       // Must return error for component to get the errors
-      return { res: err, actionType: FAILED_ACTION };
+      return { res: err, statusCode: RequestStatusCode.FAILED };
     });
 };
 

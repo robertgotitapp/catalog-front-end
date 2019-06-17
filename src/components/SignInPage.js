@@ -4,7 +4,6 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Redirect } from 'react-router-dom';
 import { signIn } from '../actions/users';
-import { UsersAction } from '../utils/const';
 
 export class SignInPage extends Component {
     state = {
@@ -19,7 +18,7 @@ export class SignInPage extends Component {
       e.preventDefault();
       this.props.signIn({ username, password })
         .then((res) => {
-          if (res.actionType === UsersAction.SIGN_IN_SUCCESS) {
+          if (res.statusCode) {
             this.setState(prevState => ({ ...prevState, toHome: true }));
           }
         });

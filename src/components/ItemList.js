@@ -13,7 +13,7 @@ export class ItemList extends Component {
             <Card.Title>Items</Card.Title>
           </Card.Body>
           { this.props.itemIds.map(id => (
-            <Link key={id} to={`/items/${id}`}>
+            <Link key={id} to={`/items/${this.props.items[id].id}`}>
               <Item id={id} />
             </Link>
           ))
@@ -27,6 +27,7 @@ export class ItemList extends Component {
 function mapStateToProps({ itemsReducer }) {
   return {
     itemIds: Object.keys(itemsReducer.items),
+    items: itemsReducer.items,
   };
 }
 
