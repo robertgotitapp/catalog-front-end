@@ -1,6 +1,6 @@
 import { ItemsAction } from '../utils/const';
 
-const initialState = { items: {} };
+const initialState = { items: {}, currentPage: null };
 
 export default function itemsReducer(state = initialState, action) {
   switch (action.type) {
@@ -8,6 +8,7 @@ export default function itemsReducer(state = initialState, action) {
       return {
         ...state,
         items: action.payload.items,
+        totalItems: action.payload.total_items,
       };
     case ItemsAction.ADD_ITEM_SUCCESS:
       // fixing problem with id not consitent
@@ -19,6 +20,11 @@ export default function itemsReducer(state = initialState, action) {
       return {
         ...state,
         [action.payload.id]: action.payload,
+      };
+    case ItemsAction.SELECT_ITEM_PAGE:
+      return {
+        ...state,
+        currentPage: action.payload.currentPage,
       };
     default:
       return state;

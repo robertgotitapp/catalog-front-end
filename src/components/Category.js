@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getItems } from '../actions/items';
+import { getItems, selectItemPage } from '../actions/items';
+import { selectCurrentCategory } from '../actions/categories';
 
 export class Category extends Component {
   viewCategory = () => {
-    this.props.getItems(this.props.category.id, 0, 100);
+    this.props.selectCurrentCategory(this.props.category);
+    this.props.selectItemPage(1);
+    const limit = 10;
+    this.props.getItems(this.props.category.id, 0, limit);
   };
 
   render() {
@@ -16,8 +20,16 @@ export class Category extends Component {
   }
 }
 
+function mapStateToProps({ itemsReducer }) {
+  return {
+    currentPage: itemsReducer.currentPage,
+  };
+}
+
 const mapDispatchToProps = {
   getItems,
+  selectCurrentCategory,
+  selectItemPage,
 };
 
-export default connect(null, mapDispatchToProps)(Category);
+export default connect(mapStateToProps, mapDispatchToProps)(Category);

@@ -28,8 +28,6 @@ export function removeItem(categoryId, itemId) {
 }
 
 export function updateItem(categoryId, itemId, item) {
-  console.log(categoryId);
-  console.log(item);
   return {
     type: ItemsAction.UPDATE_ITEM,
     promise: update(
@@ -37,5 +35,12 @@ export function updateItem(categoryId, itemId, item) {
       [HeadersType.CONTENTTYPE, HeadersType.AUTHORIZATION],
       item,
     ),
+  };
+}
+
+export function selectItemPage(pageNumber) {
+  return {
+    type: ItemsAction.SELECT_ITEM_PAGE,
+    payload: { currentPage: pageNumber },
   };
 }
