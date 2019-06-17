@@ -1,12 +1,14 @@
-import { ItemsAction } from '../utils/const';
+import { ItemsAction, HeadersType } from '../utils/const';
 import {
   get, post, update, remove,
 } from '../utils/requests';
 
-export function addItem(accessToken, categoryId, item) {
+export function addItem(categoryId, item) {
   return {
     type: ItemsAction.ADD_ITEM,
-    promise: post(`http://127.0.0.1:5000/categories/${categoryId}/items`, accessToken, item),
+    promise: post(`http://127.0.0.1:5000/categories/${categoryId}/items`,
+      [HeadersType.CONTENTTYPE, HeadersType.AUTHORIZATION],
+      item),
   };
 }
 
@@ -17,16 +19,19 @@ export function getItems(categoryId, offset, limit) {
   };
 }
 
-export function removeItem(accessToken, categoryId, itemId) {
+export function removeItem(categoryId, itemId) {
   return {
     type: ItemsAction.DELETE_ITEM,
-    promise: remove(`http://127.0.0.1:5000/categories/${categoryId}/items/${itemId}`, accessToken),
+    promise: remove(`http://127.0.0.1:5000/categories/${categoryId}/items/${itemId}`,
+      [HeadersType.CONTENTTYPE, HeadersType.AUTHORIZATION]),
   };
 }
 
-export function updateItem(accessToken, categoryId, item) {
+export function updateItem(categoryId, item) {
   return {
     type: ItemsAction.UPDATE_ITEM,
-    promise: update(`http://127.0.0.1:5000/categories/${categoryId}/items/${itemId}`, accessToken, item),
+    promise: update(`http://127.0.0.1:5000/categories/${categoryId}/items/${itemId}`,
+      [HeadersType.CONTENTTYPE, HeadersType.AUTHORIZATION],
+      item),
   };
 }

@@ -1,10 +1,12 @@
-import { CategoriesAction } from '../utils/const';
+import { CategoriesAction, HeadersType } from '../utils/const';
 import { post, get } from '../utils/requests';
 
-export function addCategory(accessToken, category) {
+export function addCategory(category) {
   return {
     type: CategoriesAction.ADD_CATEGORY,
-    promise: post('http://127.0.0.1:5000/categories', accessToken, category),
+    promise: post('http://127.0.0.1:5000/categories',
+      [HeadersType.CONTENTTYPE, HeadersType.AUTHORIZATION],
+      category),
   };
 }
 

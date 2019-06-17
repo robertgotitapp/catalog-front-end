@@ -19,10 +19,7 @@ export class UpdateItem extends Component {
 
     handleSubmit = (e) => {
       e.preventDefault();
-      this.props.updateItem(
-        this.props.users.access_token,
-        this.props.item.category_id, { ...this.state },
-      );
+      this.props.updateItem(this.props.item.category_id, { ...this.state });
     }
 
     render() {

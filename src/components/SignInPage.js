@@ -17,7 +17,7 @@ export class SignInPage extends Component {
       const { username, password } = this.state;
 
       e.preventDefault();
-      this.props.signIn({ username, password }, null)
+      this.props.signIn({ username, password })
         .then((res) => {
           if (res.actionType === UsersAction.SIGN_IN_SUCCESS) {
             this.setState(prevState => ({ ...prevState, toHome: true }));

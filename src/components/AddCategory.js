@@ -18,7 +18,7 @@ export class AddCategory extends Component {
 
     handleSubmit = (e) => {
       e.preventDefault();
-      this.props.addCategory(this.props.users.access_token, { ...this.state });
+      this.props.addCategory({ ...this.state });
     }
 
     render() {

@@ -8,7 +8,6 @@ export class ItemDetail extends Component {
   deleteItem = (e) => {
     e.preventDefault();
     this.props.removeItem(
-      this.props.usersReducer.access_token,
       this.props.item.category_id,
       this.props.item.id,
     );

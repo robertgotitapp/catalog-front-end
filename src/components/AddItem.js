@@ -19,7 +19,7 @@ export class AddItem extends Component {
 
     handleSubmit = (e) => {
       e.preventDefault();
-      this.props.addItem(this.props.users.access_token, this.props.categoryId, { ...this.state });
+      this.props.addItem(this.props.categoryId, { ...this.state });
     }
 
     render() {
