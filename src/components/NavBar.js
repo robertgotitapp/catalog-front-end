@@ -17,7 +17,7 @@ export class NavBar extends Component {
           <Navbar bg="dark" variant="dark">
             <Navbar.Brand>Catalog</Navbar.Brand>
             {
-                  this.props.users.access_token !== null
+                  this.props.isLoggedIn
                     ? (
                       <Nav className="mr-auto">
                         <Nav.Item className="navItem">
@@ -58,7 +58,7 @@ export class NavBar extends Component {
 
 function mapStateToProps({ usersReducer }) {
   return {
-    users: usersReducer,
+    isLoggedIn: !!localStorage.getItem('accessToken'),
   };
 }
 

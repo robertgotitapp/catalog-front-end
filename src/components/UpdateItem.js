@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { Redirect } from 'react-router-dom';
 import { updateItem } from '../actions/items';
 
 export class UpdateItem extends Component {
@@ -9,6 +10,7 @@ export class UpdateItem extends Component {
       name: this.props.item.name,
       price: this.props.item.price,
       description: this.props.item.description,
+      toHome: false,
     }
 
     handleChange = (e) => {
@@ -19,11 +21,27 @@ export class UpdateItem extends Component {
 
     handleSubmit = (e) => {
       e.preventDefault();
-      this.props.updateItem(this.props.item.category_id, this.props.item.id, { ...this.state });
+      const { name, price, description } = this.state;
+      this.props.updateItem(
+        this.props.item.category_id,
+        this.props.item.id,
+        { name, price, description },
+      )
+        .then((res) => {
+          if (res.statusCode) {
+            this.setState(prevState => ({ ...prevState, toHome: true }));
+          }
+        });
     }
 
     render() {
-      const { name, price, description } = this.state;
+      const {
+        name, price, description, toHome,
+      } = this.state;
+
+      if (toHome) {
+        return <Redirect to='/' />;
+      }
 
       return (
         <div>

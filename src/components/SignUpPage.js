@@ -25,7 +25,7 @@ export class SignUpPage extends Component {
         username, password, name, email,
       })
         .then((res) => {
-          if (res.actionType === UsersAction.SIGN_UP_SUCCESS) {
+          if (res.statusCode) {
             this.props.signIn({ username, password })
               .then((nextRes) => {
                 if (nextRes.statusCode) {
