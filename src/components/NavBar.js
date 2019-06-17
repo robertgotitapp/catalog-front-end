@@ -4,6 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signOut } from '../actions/users';
+import Logo from '../static/images/logo.jpeg';
 
 export class NavBar extends Component {
     handleSignOut = (e) => {
@@ -14,8 +15,14 @@ export class NavBar extends Component {
     render() {
       return (
         <div>
-          <Navbar bg="dark" variant="dark">
-            <Navbar.Brand>Catalog</Navbar.Brand>
+          <Navbar bg="light" variant="light">
+            <Navbar.Brand>
+              <img
+                alt="Got It Logo"
+                src={Logo}
+                className="d-inline-block align-top logo"
+              />
+            </Navbar.Brand>
             {
                   this.props.isLoggedIn
                     ? (

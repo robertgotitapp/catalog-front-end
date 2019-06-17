@@ -55,13 +55,12 @@ export class AddItem extends Component {
             </Form.Group>
             <Form.Control as='select' onChange={this.selectCategory}>
               {
-                this.props.categories.map(category => (
+                this.props.categoryIds.map(key => (
                   <option
-                    key={category.id}
-                    value={category.id}
-                    name={category.id}
+                    key={key}
+                    value={key}
                   >
-                    {category.name}
+                    {this.props.categories[key].name}
                   </option>
                 ))
               }
@@ -77,23 +76,8 @@ export class AddItem extends Component {
 
 function mapStateToProps({ categoriesReducer }) {
   return {
+    categoryIds: Object.keys(categoriesReducer.categories),
     categories: categoriesReducer.categories,
-    // categories: [
-    //   {
-    //     updated: '2019-06-12T03:17:40+00:00',
-    //     id: 1,
-    //     name: 'fdafdsafdsa',
-    //     description: 'fsfdfdfasdf',
-    //     created: '2019-06-12T03:17:40+00:00',
-    //   },
-    //   {
-    //     updated: '2019-06-13T14:32:34+00:00',
-    //     id: 2,
-    //     name: 'hasds',
-    //     description: 'This is actually my favorite category',
-    //     created: '2019-06-13T14:32:34+00:00',
-    //   },
-    // ],
   };
 }
 

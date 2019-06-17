@@ -72,12 +72,13 @@ export class UpdateItem extends Component {
     }
 }
 
-function mapStateToProps({ itemsReducer }, { match }) {
+function mapStateToProps({ itemsReducer, categoriesReducer }, { match }) {
   const itemId = Number(match.params.id);
   const selectedItem = Object.values(itemsReducer.items)
     .find(item => item.id === itemId);
   return {
     item: selectedItem,
+    currentCategory: categoriesReducer.currentCategory,
   };
 }
 
