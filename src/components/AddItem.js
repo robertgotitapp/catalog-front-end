@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 import { Redirect } from 'react-router-dom';
 import { addItem } from '../actions/items';
 
@@ -10,8 +11,9 @@ export class AddItem extends Component {
       name: '',
       price: 0,
       description: '',
-      selectedCategory: null,
+      selectedCategory: 1,
       toHome: false,
+      alerts: '',
     }
 
     handleChange = (e) => {
@@ -29,6 +31,20 @@ export class AddItem extends Component {
         .then((res) => {
           if (res.statusCode) {
             this.setState(prevState => ({ ...prevState, toHome: true }));
+          } else {
+            // If add item request is failed, reset all the form input
+            // and display all the error messages as alerts
+            res.errorPromise
+              .then((error) => {
+                this.setState({
+                  name: '',
+                  price: 0,
+                  description: '',
+                  selectedCategory: null,
+                  toHome: false,
+                  alerts: error.message,
+                });
+              });
           }
         });
     }
@@ -82,6 +98,18 @@ export class AddItem extends Component {
               Submit
             </Button>
           </Form>
+          {
+            // Loop through alerts dictionary and display an alert for each
+            // of one item in dictionary
+            this.state.alerts
+            && Object.keys(this.state.alerts).map((key, id) => (
+              <Alert key={id} variant='danger'>
+                {key}
+                :
+                {this.state.alerts[key]}
+              </Alert>
+            ))
+          }
         </div>
       );
     }

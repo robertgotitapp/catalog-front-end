@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 import { Redirect } from 'react-router-dom';
 import { addCategory } from '../actions/categories';
 
@@ -10,6 +11,7 @@ export class AddCategory extends Component {
       name: '',
       description: '',
       toHome: false,
+      alerts: '',
     }
 
     handleChange = (e) => {
@@ -25,6 +27,18 @@ export class AddCategory extends Component {
         .then((res) => {
           if (res.statusCode) {
             this.setState(prevState => ({ ...prevState, toHome: true }));
+          } else {
+            // If add category request is failed, reset all the form input
+            // and display all the error messages as alerts
+            res.errorPromise
+              .then((error) => {
+                this.setState({
+                  name: '',
+                  description: '',
+                  toHome: false,
+                  alerts: error.message,
+                });
+              });
           }
         });
     }
@@ -51,6 +65,18 @@ export class AddCategory extends Component {
               Submit
             </Button>
           </Form>
+          {
+            // Loop through alerts dictionary and display an alert for each
+            // of one item in dictionary
+            this.state.alerts
+            && Object.keys(this.state.alerts).map((key, id) => (
+              <Alert key={id} variant='danger'>
+                {key}
+                :
+                {this.state.alerts[key]}
+              </Alert>
+            ))
+          }
         </div>
       );
     }

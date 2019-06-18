@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 import { Redirect } from 'react-router-dom';
 import { updateItem } from '../actions/items';
 
@@ -11,6 +12,7 @@ export class UpdateItem extends Component {
       price: this.props.item.price,
       description: this.props.item.description,
       toHome: false,
+      alerts: '',
     }
 
     handleChange = (e) => {
@@ -30,6 +32,19 @@ export class UpdateItem extends Component {
         .then((res) => {
           if (res.statusCode) {
             this.setState(prevState => ({ ...prevState, toHome: true }));
+          } else {
+            // If update item request is failed, reset all the form input
+            // and display all the error messages as alerts
+            res.errorPromise
+              .then((error) => {
+                this.setState({
+                  name: this.props.item.name,
+                  price: this.props.item.price,
+                  description: this.props.item.description,
+                  toHome: false,
+                  alerts: error.message,
+                });
+              });
           }
         });
     }
@@ -67,6 +82,18 @@ export class UpdateItem extends Component {
               Submit
             </Button>
           </Form>
+          {
+            // Loop through alerts dictionary and display an alert for each
+            // of one item in dictionary
+            this.state.alerts
+            && Object.keys(this.state.alerts).map((key, id) => (
+              <Alert key={id} variant='danger'>
+                {key}
+                :
+                {this.state.alerts[key]}
+              </Alert>
+            ))
+          }
         </div>
       );
     }

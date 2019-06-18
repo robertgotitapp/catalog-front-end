@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Redirect } from 'react-router-dom';
+import Alert from 'react-bootstrap/Alert';
 import { signIn } from '../actions/users';
 
 export class SignInPage extends Component {
@@ -10,6 +11,7 @@ export class SignInPage extends Component {
       username: '',
       password: '',
       toHome: false,
+      alerts: '',
     }
 
     handleSubmit = (e) => {
@@ -18,8 +20,21 @@ export class SignInPage extends Component {
       e.preventDefault();
       this.props.signIn({ username, password })
         .then((res) => {
+          // If request is successful, return to Home page
           if (res.statusCode) {
             this.setState(prevState => ({ ...prevState, toHome: true }));
+          } else {
+            // if request is not successful, clear out the form
+            // and display error message
+            res.errorPromise
+              .then((error) => {
+                this.setState({
+                  username: '',
+                  password: '',
+                  toHome: false,
+                  alerts: error.description,
+                });
+              });
           }
         });
     }
@@ -52,6 +67,14 @@ export class SignInPage extends Component {
               Submit
             </Button>
           </Form>
+          {
+            this.state.alerts
+            && (
+            <Alert variant='danger'>
+              {this.state.alerts}
+            </Alert>
+            )
+          }
         </div>
       );
     }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 import { Redirect } from 'react-router-dom';
 import { signUp, signIn } from '../actions/users';
 
@@ -12,7 +13,8 @@ export class SignUpPage extends Component {
       name: '',
       email: '',
       toHome: false,
-      toSignUp: false,
+      toSignIn: false,
+      alerts: '',
     }
 
     handleSubmit = (e) => {
@@ -26,13 +28,31 @@ export class SignUpPage extends Component {
       })
         .then((res) => {
           if (res.statusCode) {
+            // If request is successful, proceed to automatically sign in
             this.props.signIn({ username, password })
               .then((nextRes) => {
+                // If sign in is successful, relocate to Home page,
+                // Otherwise, go to SignIn page
                 if (nextRes.statusCode) {
                   this.setState(prevState => ({ ...prevState, toHome: true }));
                 } else {
-                  this.setState(prevState => ({ ...prevState, toSignUp: true }));
+                  this.setState(prevState => ({ ...prevState, toSignIn: true }));
                 }
+              });
+          } else {
+            // If sign up request is failed, reset all the form input
+            // and display all the error messages as alerts
+            res.errorPromise
+              .then((error) => {
+                this.setState({
+                  username: '',
+                  password: '',
+                  name: '',
+                  email: '',
+                  toHome: false,
+                  toSignIn: false,
+                  alerts: error.message,
+                });
               });
           }
         });
@@ -46,14 +66,14 @@ export class SignUpPage extends Component {
 
     render() {
       const {
-        username, password, name, email, toHome, toSignUp,
+        username, password, name, email, toHome, toSignIn,
       } = this.state;
 
       if (toHome) {
         return <Redirect to='/' />;
       }
-      if (toSignUp) {
-        return <Redirect to='/signup' />;
+      if (toSignIn) {
+        return <Redirect to='/signin' />;
       }
 
       return (
@@ -79,6 +99,18 @@ export class SignUpPage extends Component {
               Submit
             </Button>
           </Form>
+          {
+            // Loop through alerts dictionary and display an alert for each
+            // of one item in dictionary
+            this.state.alerts
+            && Object.keys(this.state.alerts).map((key, id) => (
+              <Alert key={id} variant='danger'>
+                {key}
+                :
+                {this.state.alerts[key]}
+              </Alert>
+            ))
+          }
         </div>
       );
     }

@@ -21,7 +21,7 @@ const processRequest = store => next => (action) => {
         error: err,
       });
       // Must return error for component to get the errors
-      return { res: err, statusCode: RequestStatusCode.FAILED };
+      return { errorPromise: err, statusCode: RequestStatusCode.FAILED };
     });
 };
 

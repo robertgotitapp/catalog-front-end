@@ -63,6 +63,9 @@ export class ItemList extends Component {
 }
 
 function mapStateToProps({ itemsReducer, categoriesReducer }) {
+  // Find out the right most page and left most page being display
+  // in the pagination, then create an array containing list of
+  // those pages being displayed
   const lastPage = Math.floor((itemsReducer.totalItems - 1) / 10) + 1;
   const { currentPage } = itemsReducer;
   const leftPage = Math.max(currentPage - 2, 1);
