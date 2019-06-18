@@ -18,11 +18,29 @@ code {
 }
 
 .item-card {
-  width: 80%;
+  display: inline-block;
+  width: 32%;
   margin: auto;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 2%;
 }
 
 .logo {
   width: 70px;
   height:70px;
+}
+
+.item-link {
+  text-decoration: none;
+  color: black;
+}
+
+.item-link:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.list-item {
+  width: 100%;
 }

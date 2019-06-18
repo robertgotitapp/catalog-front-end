@@ -1,25 +1,28 @@
 import configureStore from 'redux-mock-store';
-import { addCategory, getCategories } from '../categories';
-import { CategoriesAction } from '../../utils/const';
+import { addCategory, getCategories, selectCurrentCategory } from '../categories';
+import { CategoriesAction, HeadersType } from '../../utils/const';
 import { post, get } from '../../utils/requests';
 
 describe('addCategory', () => {
   it('should return correct action object', async () => {
-    const response = post('http://127.0.0.1:5000/categories',
-      'ABCDEFGHIJK01234567890',
+    const response = post('/categories',
+      [HeadersType.CONTENTTYPE, HeadersType.AUTHORIZATION],
       {
         name: 'Category 1',
         description: 'Description of Category 1',
       });
 
+    // Set up mock store
     const initialState = {};
     const mockStore = configureStore();
     const store = mockStore(initialState);
 
+    // dispatch the action through the mock store and
+    // get the result action to compare with the expected response
     await store.dispatch(addCategory({
       name: 'Category 1',
       description: 'Description of Category 1',
-    }, 'ABCDEFGHIJK01234567890'));
+    }));
 
     const actions = store.getActions();
     const actionTriggered = actions.find(action => action.type === CategoriesAction.ADD_CATEGORY);
@@ -29,16 +32,38 @@ describe('addCategory', () => {
 
 describe('getCategories', () => {
   it('should return correct action object', async () => {
-    const response = get('http://127.0.0.1:5000/categories?offset=0&limit=100');
+    const response = get('/categories?offset=0&limit=10');
 
+    // Set up mock store
     const initialState = {};
     const mockStore = configureStore();
     const store = mockStore(initialState);
 
-    await store.dispatch(getCategories(0, 100));
-
+    // dispatch the action through the mock store and
+    // get the result action to compare with the expected response
+    await store.dispatch(getCategories(0, 10));
     const actions = store.getActions();
     const actionTriggered = actions.find(action => action.type === CategoriesAction.GET_CATEGORIES);
     expect(actionTriggered.promise).toEqual(response);
+  });
+});
+
+describe('selectCurrentCategory', () => {
+  it('should return correct action object', async () => {
+    const response = { currentCategory: 2 };
+
+    // Set up mock store
+    const initialState = {};
+    const mockStore = configureStore();
+    const store = mockStore(initialState);
+
+    // dispatch the action through the mock store and
+    // get the result action to compare with the expected response
+    await store.dispatch(selectCurrentCategory(2));
+    const actions = store.getActions();
+    const actionTriggered = actions.find(
+      action => action.type === CategoriesAction.SELECT_CURRENT_CATEGORY,
+    );
+    expect(actionTriggered.payload).toEqual(response);
   });
 });

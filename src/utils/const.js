@@ -1,3 +1,4 @@
+// Type of Users Actions
 export const UsersAction = {
   SIGN_UP: 'SIGN_UP',
   SIGN_UP_SUCCESS: 'SIGN_UP_SUCCESS',
@@ -8,6 +9,7 @@ export const UsersAction = {
   SIGN_OUT: 'SIGN_OUT',
 };
 
+// Type of Categories Actions
 export const CategoriesAction = {
   ADD_CATEGORY: 'ADD_CATEGORY',
   ADD_CATEGORY_SUCCESS: 'ADD_CATEGORY_SUCCESS',
@@ -18,6 +20,7 @@ export const CategoriesAction = {
   SELECT_CURRENT_CATEGORY: 'SELECT_CURRENT_CATEGORY',
 };
 
+// Type of Items Actions
 export const ItemsAction = {
   ADD_ITEM: 'ADD_ITEM',
   ADD_ITEM_SUCCESS: 'ADD_ITEM_SUCCESS',
@@ -34,16 +37,19 @@ export const ItemsAction = {
   SELECT_ITEM_PAGE: 'SELECT_ITEM_PAGE',
 };
 
+// Header Types Declaration
 export const HeadersType = {
   CONTENTTYPE: 'CONTENT-TYPE',
   AUTHORIZATION: 'AUTHORIZATION',
 };
 
+// Status Code Declaration to return by middleware
 export const RequestStatusCode = {
   SUCCESS: 1,
   FAILED: 0,
 };
 
+// Different types of HTTP Requests
 export const RequestType = {
   GET: 'GET',
   POST: 'POST',
@@ -51,6 +57,14 @@ export const RequestType = {
   DELETE: 'DELETE',
 };
 
+// Config environment endpoint
 export const EnvironmentPrefix = {
   LOCAL: 'http://127.0.0.1:5000',
+};
+
+export const PaginationConfig = {
+  ITEMS_PER_PAGE: 9,
+  CATEGORIES_PER_PAGE: 20,
+  DEFAULT_OFFSET: 0,
+  DEFAULT_PAGE: 1,
 };

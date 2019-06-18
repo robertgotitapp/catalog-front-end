@@ -11,7 +11,6 @@ export default function itemsReducer(state = initialState, action) {
         totalItems: action.payload.total_items,
       };
     case ItemsAction.ADD_ITEM_SUCCESS:
-      // fixing problem with id not consitent
       return {
         ...state,
         [action.payload.id]: action.payload,

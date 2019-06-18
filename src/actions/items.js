@@ -23,7 +23,7 @@ export function removeItem(categoryId, itemId) {
   return {
     type: ItemsAction.DELETE_ITEM,
     promise: remove(`/categories/${categoryId}/items/${itemId}`,
-      [HeadersType.CONTENTTYPE, HeadersType.AUTHORIZATION]),
+      [HeadersType.AUTHORIZATION]),
   };
 }
 

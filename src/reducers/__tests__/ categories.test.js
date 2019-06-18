@@ -2,7 +2,7 @@ import { CategoriesAction } from '../../utils/const';
 
 const reducer = require('../categories').default;
 
-describe('reducers/categories', () => {
+describe('reducers/categoriesReducer', () => {
   it('add category success', () => {
     const action = {
       type: CategoriesAction.ADD_CATEGORY_SUCCESS,
@@ -64,5 +64,16 @@ describe('reducers/categories', () => {
         updated: '2019-06-13T14:32:34+00:00',
       },
     });
+  });
+
+  it('select current category', () => {
+    const action = {
+      type: CategoriesAction.SELECT_CURRENT_CATEGORY,
+      payload: {
+        currentCategory: 3,
+      },
+    };
+    const result = reducer(undefined, action);
+    expect(result.currentCategory).toEqual(3);
   });
 });

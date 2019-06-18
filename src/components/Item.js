@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 export class Item extends Component {
   render() {
     return (
-      <Card border="dark" className='item-card'>
+      <Card border="dark">
         <Card.Header as="h4" name='name'>{this.props.item.name}</Card.Header>
         <Card.Body name='price'>
           Price: $

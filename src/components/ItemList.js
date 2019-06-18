@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Pagination from 'react-bootstrap/Pagination';
 import Item from './Item';
 import { getItems, selectItemPage } from '../actions/items';
+import { PaginationConfig } from '../utils/const';
 
 export class ItemList extends Component {
   goToPage = (e) => {
@@ -12,9 +13,9 @@ export class ItemList extends Component {
     if (e.target.innerHTML) {
       const destinationPage = Number(e.target.innerHTML);
       this.props.selectItemPage(destinationPage);
-      const offset = (destinationPage - 1) * 10;
-      const limit = 10;
-      this.props.getItems(this.props.selectedCategory.id, offset, limit);
+      const offset = (destinationPage - 1) * PaginationConfig.ITEMS_PER_PAGE;
+      const limit = PaginationConfig.ITEMS_PER_PAGE;
+      this.props.getItems(this.props.selectedCategory, offset, limit);
     }
   }
 
@@ -25,12 +26,14 @@ export class ItemList extends Component {
           <Card.Body>
             <Card.Title>Items</Card.Title>
           </Card.Body>
-          { this.props.itemIds.map(id => (
-            <Link key={id} to={`/items/${this.props.items[id].id}`}>
-              <Item id={id} />
-            </Link>
-          ))
+          <div>
+            { this.props.itemIds.map(id => (
+              <Link className='item-link item-card' key={id} to={`/items/${this.props.items[id].id}`}>
+                <Item id={id} />
+              </Link>
+            ))
           }
+          </div>
           <Pagination>
             {
               // Current Page does not have onClick event but have active attribute
