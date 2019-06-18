@@ -6,12 +6,12 @@ export class Item extends Component {
   render() {
     return (
       <Card border="dark" className='item-card'>
-        <Card.Header as="h4">{this.props.item.name}</Card.Header>
-        <Card.Body>
+        <Card.Header as="h4" name='name'>{this.props.item.name}</Card.Header>
+        <Card.Body name='price'>
           Price: $
           {this.props.item.price}
         </Card.Body>
-        <Card.Text>
+        <Card.Text name='description'>
           {this.props.item.description}
         </Card.Text>
       </Card>

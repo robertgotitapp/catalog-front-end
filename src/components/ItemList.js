@@ -48,6 +48,7 @@ export class ItemList extends Component {
                   : (
                     <Pagination.Item
                       key={pageNumber}
+                      name='clickablePage'
                       onClick={this.goToPage}
                     >
                       {pageNumber}

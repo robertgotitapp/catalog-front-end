@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Form from 'react-bootstrap/Form';
+import Alert from 'react-bootstrap/Alert';
 import { AddCategory } from '../AddCategory';
 
 describe('components/AddCategory', () => {
@@ -37,5 +38,17 @@ describe('components/AddCategory', () => {
     const form = container.find(Form);
     form.simulate('submit');
     expect(container.instance().handleSubmit).toHaveBeenCalled();
+  });
+
+  it('should trigger alert when there is error message', () => {
+    container.setState({
+      name: '',
+      description: '',
+      toHome: false,
+      alerts: {
+        name: 'Name length has to at least 5 characters',
+      },
+    });
+    expect(container.find(Alert)).toHaveLength(1);
   });
 });

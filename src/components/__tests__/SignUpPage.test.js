@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Form from 'react-bootstrap/Form';
+import Alert from 'react-bootstrap/Alert';
 import { SignUpPage } from '../SignUpPage';
 
 describe('components/SignUpPage', () => {
@@ -57,5 +58,20 @@ describe('components/SignUpPage', () => {
     const form = container.find(Form);
     form.simulate('submit');
     expect(container.instance().handleSubmit).toHaveBeenCalled();
+  });
+
+  it('should trigger alert when there is error message', () => {
+    container.setState({
+      username: '',
+      password: '',
+      name: '',
+      email: '',
+      toHome: false,
+      toSignIn: false,
+      alerts: {
+        email: 'has been registed with different account',
+      },
+    });
+    expect(container.find(Alert)).toHaveLength(1);
   });
 });

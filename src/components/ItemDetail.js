@@ -45,21 +45,27 @@ export class ItemDetail extends Component {
 
     return (
       <div>
-        <p>
+        <p name='name'>
           {this.props.item.name}
         </p>
-        <p>
+        <p name='price'>
           Price:
           {this.props.item.price}
         </p>
-        <p>
+        <p name='description'>
           Description:
           {this.props.item.description}
         </p>
-        <Link to={`/items/${this.props.item.id}/update`}>
+        <Link
+          name='updateLink'
+          to={`/items/${this.props.item.id}/update`}
+        >
           Update
         </Link>
-        <Button onClick={this.deleteItem}>
+        <Button
+          name='removeBtn'
+          onClick={this.deleteItem}
+        >
           Remove
         </Button>
         {

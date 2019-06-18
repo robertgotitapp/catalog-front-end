@@ -28,16 +28,16 @@ export class NavBar extends Component {
                     ? (
                       <Nav className="mr-auto">
                         <Nav.Item className="navItem">
-                          <Link to='/'>Home</Link>
+                          <Link name='home' to='/'>Home</Link>
                         </Nav.Item>
                         <Nav.Item className="navItem">
-                          <Link to='/newcategory'>Add Category</Link>
+                          <Link name='addcategory' to='/newcategory'>Add Category</Link>
                         </Nav.Item>
                         <Nav.Item className="navItem">
-                          <Link to='/newitem'>Add Item</Link>
+                          <Link name='additem' to='/newitem'>Add Item</Link>
                         </Nav.Item>
                         <Nav.Item className="navItem">
-                          <Link onClick={this.handleSignOut} to='/'>
+                          <Link name='signout' onClick={this.handleSignOut} to='/'>
                         Sign Out
                           </Link>
                         </Nav.Item>
@@ -46,13 +46,13 @@ export class NavBar extends Component {
                     : (
                       <Nav className="mr-auto">
                         <Nav.Item className="navItem">
-                          <Link to='/'>Home</Link>
+                          <Link name='home' to='/'>Home</Link>
                         </Nav.Item>
                         <Nav.Item className="navItem">
-                          <Link to='/signin'>Sign In</Link>
+                          <Link name='signin' to='/signin'>Sign In</Link>
                         </Nav.Item>
                         <Nav.Item className="navItem">
-                          <Link to='/signup'>Sign Up</Link>
+                          <Link name='signup' to='/signup'>Sign Up</Link>
                         </Nav.Item>
                       </Nav>
                     )

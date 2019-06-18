@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/AddItem should render correctly 1`] = `
+<div>
+  <p
+    name="name"
+  >
+    Item 4
+  </p>
+  <p
+    name="price"
+  >
+    Price:
+    19
+  </p>
+  <p
+    name="description"
+  >
+    Description:
+    Item 4
+  </p>
+  <Link
+    name="updateLink"
+    to="/items/11/update"
+  >
+    Update
+  </Link>
+  <Button
+    active={false}
+    disabled={false}
+    name="removeBtn"
+    onClick={[Function]}
+    type="button"
+    variant="primary"
+  >
+    Remove
+  </Button>
+</div>
+`;
