@@ -7,38 +7,15 @@ import Item from './Item';
 import { getItems, selectItemPage } from '../actions/items';
 
 export class ItemList extends Component {
-  getNextSetofItems = (nextPage) => {
-    const offset = (nextPage - 1) * 10;
-    const limit = 10;
-    this.props.getItems(this.props.selectedCategory.id, offset, limit);
-  }
-
-  prevPage = (e) => {
+  goToPage = (e) => {
     e.preventDefault();
-    const nextPage = this.props.currentPage - 1;
-    this.props.selectItemPage(nextPage);
-    this.getNextSetofItems(nextPage);
-  }
-
-  nextPage = (e) => {
-    e.preventDefault();
-    const nextPage = this.props.currentPage + 1;
-    this.props.selectItemPage(nextPage);
-    this.getNextSetofItems(nextPage);
-  }
-
-  firstPage = (e) => {
-    e.preventDefault();
-    const nextPage = 1;
-    this.props.selectItemPage(nextPage);
-    this.getNextSetofItems(nextPage);
-  }
-
-  lastPage = (e) => {
-    e.preventDefault();
-    const nextPage = this.props.lastPage;
-    this.props.selectItemPage(nextPage);
-    this.getNextSetofItems(nextPage);
+    if (e.target.innerHTML) {
+      const destinationPage = Number(e.target.innerHTML);
+      this.props.selectItemPage(destinationPage);
+      const offset = (destinationPage - 1) * 10;
+      const limit = 10;
+      this.props.getItems(this.props.selectedCategory.id, offset, limit);
+    }
   }
 
   render() {
@@ -55,11 +32,29 @@ export class ItemList extends Component {
           ))
           }
           <Pagination>
-            <Pagination.First onClick={this.firstPage} />
-            <Pagination.Prev onClick={this.prevPage} />
-            <Pagination.Item>{this.props.currentPage}</Pagination.Item>
-            <Pagination.Next onClick={this.nextPage} />
-            <Pagination.Item onClick={this.lastPage}>{this.props.lastPage}</Pagination.Item>
+            {
+              // Current Page does not have onClick event but have active attribute
+              // and likewise.
+              this.props.pageList.map(pageNumber => (
+                pageNumber === this.props.currentPage
+                  ? (
+                    <Pagination.Item
+                      key={pageNumber}
+                      active
+                    >
+                      {pageNumber}
+                    </Pagination.Item>
+                  )
+                  : (
+                    <Pagination.Item
+                      key={pageNumber}
+                      onClick={this.goToPage}
+                    >
+                      {pageNumber}
+                    </Pagination.Item>
+                  )
+              ))
+            }
           </Pagination>
         </Card>
       </div>
@@ -68,12 +63,20 @@ export class ItemList extends Component {
 }
 
 function mapStateToProps({ itemsReducer, categoriesReducer }) {
+  const lastPage = Math.floor((itemsReducer.totalItems - 1) / 10) + 1;
+  const { currentPage } = itemsReducer;
+  const leftPage = Math.max(currentPage - 2, 1);
+  const rightPage = Math.min(lastPage, currentPage + 2);
+  const pageList = [];
+  for (let i = leftPage; i <= rightPage; i += 1) {
+    pageList.push(i);
+  }
   return {
     itemIds: Object.keys(itemsReducer.items),
     items: itemsReducer.items,
-    lastPage: Math.floor((itemsReducer.totalItems - 1) / 10) + 1,
     selectedCategory: categoriesReducer.currentCategory,
-    currentPage: itemsReducer.currentPage,
+    currentPage,
+    pageList,
   };
 }
 

@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { Redirect } from 'react-router-dom';
 import { addCategory } from '../actions/categories';
 
 export class AddCategory extends Component {
     state = {
       name: '',
       description: '',
+      toHome: false,
     }
 
     handleChange = (e) => {
@@ -18,11 +20,21 @@ export class AddCategory extends Component {
 
     handleSubmit = (e) => {
       e.preventDefault();
-      this.props.addCategory({ ...this.state });
+      const { name, description } = this.state;
+      this.props.addCategory({ name, description })
+        .then((res) => {
+          if (res.statusCode) {
+            this.setState(prevState => ({ ...prevState, toHome: true }));
+          }
+        });
     }
 
     render() {
       const { name, description } = this.state;
+
+      if (this.state.toHome) {
+        return <Redirect to='/' />;
+      }
 
       return (
         <div>

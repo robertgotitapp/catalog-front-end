@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { Redirect } from 'react-router-dom';
 import { addItem } from '../actions/items';
 
 export class AddItem extends Component {
@@ -10,6 +11,7 @@ export class AddItem extends Component {
       price: 0,
       description: '',
       selectedCategory: null,
+      toHome: false,
     }
 
     handleChange = (e) => {
@@ -23,7 +25,12 @@ export class AddItem extends Component {
         name, price, description, selectedCategory,
       } = this.state;
       e.preventDefault();
-      this.props.addItem(selectedCategory, { name, price, description });
+      this.props.addItem(selectedCategory, { name, price, description })
+        .then((res) => {
+          if (res.statusCode) {
+            this.setState(prevState => ({ ...prevState, toHome: true }));
+          }
+        });
     }
 
     selectCategory = (e) => {
@@ -36,7 +43,13 @@ export class AddItem extends Component {
     }
 
     render() {
-      const { name, price, description } = this.state;
+      const {
+        name, price, description, toHome,
+      } = this.state;
+
+      if (toHome) {
+        return <Redirect to='/' />;
+      }
 
       return (
         <div>
