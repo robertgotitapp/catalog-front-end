@@ -28,7 +28,6 @@ export class ItemDetail extends Component {
           // if request is not successful, display error message
           res.errorPromise
             .then((error) => {
-              console.log(error);
               this.setState({
                 toHome: false,
                 alerts: error.description,

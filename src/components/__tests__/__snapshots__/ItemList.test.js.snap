@@ -108,15 +108,17 @@ exports[`components/ItemList should render correctly 1`] = `
         activeLabel="(current)"
         disabled={false}
         key="1"
+        name={1}
       >
         1
       </PageItem>
       <PageItem
         active={false}
         activeLabel="(current)"
+        className="clickablePage"
         disabled={false}
         key="2"
-        name="clickablePage"
+        name={2}
         onClick={[Function]}
       >
         2

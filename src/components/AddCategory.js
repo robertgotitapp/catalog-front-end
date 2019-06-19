@@ -28,8 +28,8 @@ export class AddCategory extends Component {
       if (name.length <= 5) {
         errors.name = 'Name must be longer than 5 characters.';
       }
-      if (description > 200) {
-        errors.email = 'Description must be within 200 characters.';
+      if (description.length > 200) {
+        errors.description = 'Description must be within 200 characters.';
       }
       if (Object.keys(errors).length !== 0) {
         this.setState({
@@ -49,8 +49,8 @@ export class AddCategory extends Component {
             if (res.statusCode) {
               this.setState(prevState => ({ ...prevState, toHome: true }));
             } else {
-            // If add category request is failed, reset all the form input
-            // and display all the error messages as alerts
+              // If add category request is failed, reset all the form input
+              // and display all the error messages as alerts
               res.errorPromise
                 .then((error) => {
                   this.setState({
@@ -67,7 +67,6 @@ export class AddCategory extends Component {
 
     render() {
       const { name, description } = this.state;
-
       if (this.state.toHome) {
         return <Redirect to='/' />;
       }

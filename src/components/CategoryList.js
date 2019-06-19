@@ -20,9 +20,7 @@ export class CategoryList extends Component {
   }
 
   viewCategory = (e) => {
-    e.preventDefault();
     const categoryChosen = Number(e.target.name);
-    console.log(categoryChosen);
     this.props.selectCurrentCategory(categoryChosen);
     this.props.selectItemPage(PaginationConfig.DEFAULT_PAGE);
     this.props.getItems(categoryChosen,

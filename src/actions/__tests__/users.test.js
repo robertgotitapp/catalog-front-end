@@ -1,7 +1,9 @@
 import configureStore from 'redux-mock-store';
-import { signUp, signIn, signOut } from '../users';
+import {
+  signUp, signIn, signOut, getUserData,
+} from '../users';
 import { UsersAction, HeadersType } from '../../utils/const';
-import { post } from '../../utils/requests';
+import { post, get } from '../../utils/requests';
 
 describe('signUp', () => {
   it('should return correct action object', async () => {
@@ -73,5 +75,21 @@ describe('signOut', () => {
     const actions = store.getActions();
     const actionTriggered = actions.find(action => action.type === UsersAction.SIGN_OUT);
     expect(actionTriggered.access_token).toEqual(response);
+  });
+});
+
+describe('getUserData', () => {
+  it('should return correct action object', () => {
+    const response = get('/users', [HeadersType.AUTHORIZATION]);
+
+    // Set up mock store
+    const initialState = {};
+    const mockStore = configureStore();
+    const store = mockStore(initialState);
+
+    store.dispatch(getUserData());
+    const actions = store.getActions();
+    const actionTriggered = actions.find(action => action.type === UsersAction.GET_USER_DATA);
+    expect(actionTriggered.promise).toEqual(response);
   });
 });

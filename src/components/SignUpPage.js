@@ -24,17 +24,18 @@ export class SignUpPage extends Component {
       } = this.state;
       const errors = {};
       if (username.length <= 5) {
-        errors.username = 'Username must be longer than 5 characters.';
+        errors.username = 'Username must be at least 5 characters.';
       }
-      if (!password.match(REGEX.PASSWORD)) {
-        errors.password = 'Password must be at least 8 characters, includes at least on letter and one number';
+      if (password.length < 8) {
+        errors.password = 'Password must be at least 8 characters';
       }
       if (name.length <= 5) {
-        errors.name = 'Name must be longer than 5 characters.';
+        errors.name = 'Name must be at least 5 characters.';
       }
-      if (!email.match(REGEX.EMAIL)) {
-        errors.email = 'Email must be valid email address.';
+      if (email.length < 8) {
+        errors.email = 'Email must be at least 8 characters';
       }
+      console.log(errors);
       if (Object.keys(errors).length !== 0) {
         this.setState({
           alerts: errors,
@@ -63,7 +64,9 @@ export class SignUpPage extends Component {
                   if (secondRes.statusCode) {
                     this.props.getUserData()
                       .then((thirdRes) => {
-                        this.setState(prevState => ({ ...prevState, toHome: true }));
+                        if (thirdRes.statusCode) {
+                          this.setState(prevState => ({ ...prevState, toHome: true }));
+                        }
                       });
                   } else {
                     this.setState(prevState => ({ ...prevState, toSignIn: true }));

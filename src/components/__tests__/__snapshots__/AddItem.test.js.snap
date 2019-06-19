@@ -53,6 +53,7 @@ exports[`components/AddItem should render correctly 1`] = `
     </FormGroup>
     <FormControl
       as="select"
+      name="selectedCategory"
       onChange={[Function]}
     >
       <option

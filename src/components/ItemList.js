@@ -9,7 +9,6 @@ import { PaginationConfig } from '../utils/const';
 
 export class ItemList extends Component {
   goToPage = (e) => {
-    e.preventDefault();
     if (e.target.innerHTML) {
       const destinationPage = Number(e.target.innerHTML);
       this.props.selectItemPage(destinationPage);
@@ -43,6 +42,7 @@ export class ItemList extends Component {
                   ? (
                     <Pagination.Item
                       key={pageNumber}
+                      name={pageNumber}
                       active
                     >
                       {pageNumber}
@@ -51,7 +51,8 @@ export class ItemList extends Component {
                   : (
                     <Pagination.Item
                       key={pageNumber}
-                      name='clickablePage'
+                      name={pageNumber}
+                      className='clickablePage'
                       onClick={this.goToPage}
                     >
                       {pageNumber}

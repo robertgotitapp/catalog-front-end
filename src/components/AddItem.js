@@ -30,11 +30,11 @@ export class AddItem extends Component {
       if (name.length <= 5) {
         errors.name = 'Name must be longer than 5 characters.';
       }
-      if (description > 200) {
-        errors.email = 'Description must be within 200 characters.';
+      if (description.length > 200) {
+        errors.description = 'Description must be within 200 characters.';
       }
       if (price <= 0) {
-        errors.email = 'Price must be positive number.';
+        errors.price = 'Price must be positive number.';
       }
       if (Object.keys(errors).length !== 0) {
         this.setState({
@@ -108,7 +108,7 @@ export class AddItem extends Component {
               <Form.Label>Item Description</Form.Label>
               <Form.Control type="text" name="description" onChange={this.handleChange} value={description} />
             </Form.Group>
-            <Form.Control as='select' onChange={this.selectCategory}>
+            <Form.Control as="select" name="selectedCategory" onChange={this.selectCategory}>
               {
                 this.props.categoryIds.map(key => (
                   <option

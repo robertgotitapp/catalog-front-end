@@ -1,10 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
-import { Route } from 'react-router-dom';
 import { AddCategory } from '../AddCategory';
-import { addCategory } from '../../actions/categories';
 import { update } from '../../utils/requests';
 
 describe('components/AddCategory', () => {
@@ -23,7 +20,7 @@ describe('components/AddCategory', () => {
     };
   });
 
-  const inputNameAndDescriptionThenSubmit = () => {
+  const inputValidNameAndDescription = () => {
     wrapper.find('[name="name"]')
       .simulate('change',
         { target: { name: 'name', value: 'Test Category 1' } });
@@ -31,8 +28,27 @@ describe('components/AddCategory', () => {
     wrapper.find('[name="description"]')
       .simulate('change',
         { target: { name: 'description', value: 'Test Category 1' } });
+  };
 
-    wrapper.instance().handleSubmit = ({
+  const inputInvalidNameAndDescription = () => {
+    wrapper.find('[name="name"]')
+      .simulate('change',
+        { target: { name: 'name', value: 'Tet' } });
+
+    wrapper.find('[name="description"]')
+      .simulate('change',
+        {
+          target: {
+            name: 'description',
+            value: 'rojt9QGe5MP7AXXYzi9SmREjtBkLg9OTMUHO9WKkujABJPbx2gAcNC'
+              + 'y11WkuXZ52dPzHE95m72q1HOeAcfQkAQ7gJbh9kiWBSac7OnW4Vu2hrpkGYk1T1gVJoeBD'
+              + 'LLFO3GsB5uo9YYQOiURst6MEXkS3jW2aIBEF2tYIabAJups0nDb3M7y8fExN7M4EqriAxR4cctrItgi5te72e9IHj7zYvh8y',
+          },
+        });
+  };
+
+  const submitForm = () => {
+    wrapper.instance().handleSubmit({
       preventDefault: jest.fn(),
     });
   };
@@ -56,17 +72,37 @@ describe('components/AddCategory', () => {
     expect(wrapper.state().description).toEqual('description');
   });
 
-  it('should render Redirect Component when valid category detail is submitted', async () => {
+  it('should change state toHome to true when valid category detail is submitted', async () => {
     setup();
-    inputNameAndDescriptionThenSubmit();
+    inputValidNameAndDescription();
+    submitForm();
     await Promise.resolve();
-    update();
-    wrapper.instance().validateInput = jest.fn();
-    wrapper.instance().forceUpdate();
-    expect(wrapper.instance().validateInput).toHaveBeenCalled();
+    expect(wrapper.state().toHome).toEqual(true);
+  });
 
-    // await Promise.resolve();
-    // update();
-    // expect(wrapper.find(Route)).toHaveLength(1);
+  it('should render Alert when invalid cateogry detail is submitted', async () => {
+    setup();
+    inputInvalidNameAndDescription();
+    submitForm();
+    expect(wrapper.find(Alert)).toHaveLength(2);
+  });
+
+  it('should display alerts if the request to api is failed', async () => {
+    props = {
+      addCategory: jest.fn(() => Promise.resolve({
+        statusCode: 0,
+        errorPromise: Promise.resolve({
+          message: {
+            name: 'Category name already existed',
+          },
+        }),
+      })),
+    };
+    setup();
+    inputValidNameAndDescription();
+    submitForm();
+    await Promise.resolve();
+    await Promise.resolve();
+    expect(wrapper.find(Alert)).toHaveLength(1);
   });
 });
