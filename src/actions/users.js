@@ -1,5 +1,5 @@
 import { UsersAction, HeadersType } from '../utils/const';
-import { post } from '../utils/requests';
+import { get, post } from '../utils/requests';
 
 export function signUp(user) {
   return {
@@ -12,6 +12,13 @@ export function signIn(credential) {
   return {
     type: UsersAction.SIGN_IN,
     promise: post('/auth', [HeadersType.CONTENTTYPE], credential),
+  };
+}
+
+export function getUserData() {
+  return {
+    type: UsersAction.GET_USER_DATA,
+    promise: get('/users', [HeadersType.AUTHORIZATION]),
   };
 }
 

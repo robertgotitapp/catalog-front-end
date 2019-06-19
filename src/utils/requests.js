@@ -34,7 +34,10 @@ export async function request(methodType, endpoint, headerTypes = null, data = n
   return response.json();
 }
 
-export const get = endpoint => request(RequestType.GET, endpoint);
+export const get = (
+  endpoint,
+  headerTypes = null,
+) => request(RequestType.GET, endpoint, headerTypes);
 export const post = (
   endpoint,
   headerTypes,

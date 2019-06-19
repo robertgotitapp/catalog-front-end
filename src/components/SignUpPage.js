@@ -4,7 +4,8 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import { Redirect } from 'react-router-dom';
-import { signUp, signIn } from '../actions/users';
+import { signUp, signIn, getUserData } from '../actions/users';
+import { REGEX } from '../utils/const';
 
 export class SignUpPage extends Component {
     state = {
@@ -15,14 +16,43 @@ export class SignUpPage extends Component {
       toHome: false,
       toSignIn: false,
       alerts: '',
+      validationErrors: {},
     }
 
-    handleSubmit = (e) => {
+    validateInput = () => {
       const {
         username, password, name, email,
       } = this.state;
+      const validationErrs = {};
+      if (username.length <= 5) {
+        validationErrs.username = 'Username must be longer than 5 characters.';
+      }
+      if (!password.match(REGEX.PASSWORD)) {
+        validationErrs.password = 'Password must be at least 8 characters, includes at least on letter and one number';
+      }
+      if (name.length <= 5) {
+        validationErrs.name = 'Name must be longer than 5 characters.';
+      }
+      if (!email.match(REGEX.EMAIL)) {
+        validationErrs.email = 'Email must be valid email address.';
+      }
+      console.log(validationErrs);
+      this.setState(prevState => (
+        {
+          ...prevState,
+          validationErrors: validationErrs,
+        }));
+      console.log(this.state.validationErrors);
+    }
 
+    handleSubmit = (e) => {
       e.preventDefault();
+      const {
+        username, password, name, email,
+      } = this.state;
+      this.validateInput();
+      console.log(this.state.validationErrors);
+      console.log(this.state.toHome);
       this.props.signUp({
         username, password, name, email,
       })
@@ -30,11 +60,14 @@ export class SignUpPage extends Component {
           if (res.statusCode) {
             // If request is successful, proceed to automatically sign in
             this.props.signIn({ username, password })
-              .then((nextRes) => {
+              .then((secondRes) => {
                 // If sign in is successful, relocate to Home page,
                 // Otherwise, go to SignIn page
-                if (nextRes.statusCode) {
-                  this.setState(prevState => ({ ...prevState, toHome: true }));
+                if (secondRes.statusCode) {
+                  this.props.getUserData()
+                    .then((thirdRes) => {
+                      this.setState(prevState => ({ ...prevState, toHome: true }));
+                    });
                 } else {
                   this.setState(prevState => ({ ...prevState, toSignIn: true }));
                 }
@@ -117,7 +150,7 @@ export class SignUpPage extends Component {
 }
 
 const mapDispatchToProps = {
-  signUp, signIn,
+  signUp, signIn, getUserData,
 };
 
 export default connect(null, mapDispatchToProps)(SignUpPage);

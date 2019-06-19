@@ -24,38 +24,38 @@ export class NavBar extends Component {
               />
             </Navbar.Brand>
             {
-                  this.props.isLoggedIn
-                    ? (
-                      <Nav className="mr-auto">
-                        <Nav.Item className="navItem">
-                          <Link name='home' to='/'>Home</Link>
-                        </Nav.Item>
-                        <Nav.Item className="navItem">
-                          <Link name='addcategory' to='/newcategory'>Add Category</Link>
-                        </Nav.Item>
-                        <Nav.Item className="navItem">
-                          <Link name='additem' to='/newitem'>Add Item</Link>
-                        </Nav.Item>
-                        <Nav.Item className="navItem">
-                          <Link name='signout' onClick={this.handleSignOut} to='/'>
-                        Sign Out
-                          </Link>
-                        </Nav.Item>
-                      </Nav>
-                    )
-                    : (
-                      <Nav className="mr-auto">
-                        <Nav.Item className="navItem">
-                          <Link name='home' to='/'>Home</Link>
-                        </Nav.Item>
-                        <Nav.Item className="navItem">
-                          <Link name='signin' to='/signin'>Sign In</Link>
-                        </Nav.Item>
-                        <Nav.Item className="navItem">
-                          <Link name='signup' to='/signup'>Sign Up</Link>
-                        </Nav.Item>
-                      </Nav>
-                    )
+              this.props.isLoggedIn
+                ? (
+                  <Nav className="mr-auto">
+                    <Nav.Item className="navItem">
+                      <Link name='home' to='/'>Home</Link>
+                    </Nav.Item>
+                    <Nav.Item className="navItem">
+                      <Link name='addcategory' to='/newcategory'>Add Category</Link>
+                    </Nav.Item>
+                    <Nav.Item className="navItem">
+                      <Link name='additem' to='/newitem'>Add Item</Link>
+                    </Nav.Item>
+                    <Nav.Item className="navItem">
+                      <Link name='signout' onClick={this.handleSignOut} to='/'>
+                    Sign Out
+                      </Link>
+                    </Nav.Item>
+                  </Nav>
+                )
+                : (
+                  <Nav className="mr-auto">
+                    <Nav.Item className="navItem">
+                      <Link name='home' to='/'>Home</Link>
+                    </Nav.Item>
+                    <Nav.Item className="navItem">
+                      <Link name='signin' to='/signin'>Sign In</Link>
+                    </Nav.Item>
+                    <Nav.Item className="navItem">
+                      <Link name='signup' to='/signup'>Sign Up</Link>
+                    </Nav.Item>
+                  </Nav>
+                )
               }
           </Navbar>
         </div>

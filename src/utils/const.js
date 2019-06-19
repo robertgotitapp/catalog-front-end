@@ -7,6 +7,9 @@ export const UsersAction = {
   SIGN_IN_SUCCESS: 'SIGN_IN_SUCCESS',
   SIGN_IN_FAILED: 'SIGN_IN_FAILED',
   SIGN_OUT: 'SIGN_OUT',
+  GET_USER_DATA: 'GET_USER_DATA',
+  GET_USER_DATA_SUCCESS: 'GET_USER_DATA_SUCCESS',
+  GET_USER_DATA_FAILED: 'GET_USER_DATA_FAILED',
 };
 
 // Type of Categories Actions
@@ -67,4 +70,9 @@ export const PaginationConfig = {
   CATEGORIES_PER_PAGE: 20,
   DEFAULT_OFFSET: 0,
   DEFAULT_PAGE: 1,
+};
+
+export const REGEX = {
+  EMAIL: '/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/',
+  PASSWORD: '^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$',
 };

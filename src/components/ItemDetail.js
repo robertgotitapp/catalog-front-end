@@ -56,18 +56,24 @@ export class ItemDetail extends Component {
           Description:
           {this.props.item.description}
         </p>
-        <Link
-          name='updateLink'
-          to={`/items/${this.props.item.id}/update`}
-        >
+        { this.props.isAuthorized
+        && (
+        <div>
+          <Link
+            name='updateLink'
+            to={`/items/${this.props.item.id}/update`}
+          >
           Update
-        </Link>
-        <Button
-          name='removeBtn'
-          onClick={this.deleteItem}
-        >
+          </Link>
+          <Button
+            name='removeBtn'
+            onClick={this.deleteItem}
+          >
           Remove
-        </Button>
+          </Button>
+        </div>
+        )
+        }
         {
           this.state.alerts
           && (
@@ -85,10 +91,12 @@ function mapStateToProps({ itemsReducer, categoriesReducer }, { match }) {
   const itemId = Number(match.params.id);
   const selectedItem = Object.values(itemsReducer.items)
     .find(item => item.id === itemId);
+  const isAuthorized = Number(localStorage.getItem('userId')) === selectedItem.user_id;
   return {
     item: selectedItem,
     selectedCategory: categoriesReducer.currentCategory,
     currentPage: itemsReducer.currentPage,
+    isAuthorized,
   };
 }
 

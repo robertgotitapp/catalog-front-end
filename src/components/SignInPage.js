@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Redirect } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
-import { signIn } from '../actions/users';
+import { signIn, getUserData } from '../actions/users';
 
 export class SignInPage extends Component {
     state = {
@@ -22,7 +22,12 @@ export class SignInPage extends Component {
         .then((res) => {
           // If request is successful, return to Home page
           if (res.statusCode) {
-            this.setState(prevState => ({ ...prevState, toHome: true }));
+            this.props.getUserData()
+              .then((nextRes) => {
+                if (nextRes.statusCode) {
+                  this.setState(prevState => ({ ...prevState, toHome: true }));
+                }
+              });
           } else {
             // if request is not successful, clear out the form
             // and display error message
@@ -82,6 +87,7 @@ export class SignInPage extends Component {
 
 const mapDispatchToProps = {
   signIn,
+  getUserData,
 };
 
 export default connect(null, mapDispatchToProps)(SignInPage);
