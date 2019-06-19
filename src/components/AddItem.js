@@ -22,31 +22,56 @@ export class AddItem extends Component {
       });
     }
 
+    validateInput = () => {
+      const {
+        name, description, price,
+      } = this.state;
+      const errors = {};
+      if (name.length <= 5) {
+        errors.name = 'Name must be longer than 5 characters.';
+      }
+      if (description > 200) {
+        errors.email = 'Description must be within 200 characters.';
+      }
+      if (price <= 0) {
+        errors.email = 'Price must be positive number.';
+      }
+      if (Object.keys(errors).length !== 0) {
+        this.setState({
+          alerts: errors,
+        });
+        return false;
+      }
+      return true;
+    }
+
     handleSubmit = (e) => {
       const {
         name, price, description, selectedCategory,
       } = this.state;
       e.preventDefault();
-      this.props.addItem(selectedCategory, { name, price, description })
-        .then((res) => {
-          if (res.statusCode) {
-            this.setState(prevState => ({ ...prevState, toHome: true }));
-          } else {
+      if (this.validateInput()) {
+        this.props.addItem(selectedCategory, { name, price, description })
+          .then((res) => {
+            if (res.statusCode) {
+              this.setState(prevState => ({ ...prevState, toHome: true }));
+            } else {
             // If add item request is failed, reset all the form input
             // and display all the error messages as alerts
-            res.errorPromise
-              .then((error) => {
-                this.setState({
-                  name: '',
-                  price: 0,
-                  description: '',
-                  selectedCategory: null,
-                  toHome: false,
-                  alerts: error.message,
+              res.errorPromise
+                .then((error) => {
+                  this.setState({
+                    name: '',
+                    price: 0,
+                    description: '',
+                    selectedCategory: null,
+                    toHome: false,
+                    alerts: error.message,
+                  });
                 });
-              });
-          }
-        });
+            }
+          });
+      }
     }
 
     selectCategory = (e) => {
@@ -69,6 +94,7 @@ export class AddItem extends Component {
 
       return (
         <div>
+          <h2>Add Item</h2>
           <Form onSubmit={this.handleSubmit}>
             <Form.Group>
               <Form.Label>Item Name</Form.Label>

@@ -2,6 +2,9 @@
 
 exports[`components/SignUpPage should render correctly 1`] = `
 <div>
+  <h2>
+    Sign Up
+  </h2>
   <Form
     inline={false}
     onSubmit={[Function]}

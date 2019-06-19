@@ -16,33 +16,32 @@ export class SignUpPage extends Component {
       toHome: false,
       toSignIn: false,
       alerts: '',
-      validationErrors: {},
     }
 
     validateInput = () => {
       const {
         username, password, name, email,
       } = this.state;
-      const validationErrs = {};
+      const errors = {};
       if (username.length <= 5) {
-        validationErrs.username = 'Username must be longer than 5 characters.';
+        errors.username = 'Username must be longer than 5 characters.';
       }
       if (!password.match(REGEX.PASSWORD)) {
-        validationErrs.password = 'Password must be at least 8 characters, includes at least on letter and one number';
+        errors.password = 'Password must be at least 8 characters, includes at least on letter and one number';
       }
       if (name.length <= 5) {
-        validationErrs.name = 'Name must be longer than 5 characters.';
+        errors.name = 'Name must be longer than 5 characters.';
       }
       if (!email.match(REGEX.EMAIL)) {
-        validationErrs.email = 'Email must be valid email address.';
+        errors.email = 'Email must be valid email address.';
       }
-      console.log(validationErrs);
-      this.setState(prevState => (
-        {
-          ...prevState,
-          validationErrors: validationErrs,
-        }));
-      console.log(this.state.validationErrors);
+      if (Object.keys(errors).length !== 0) {
+        this.setState({
+          alerts: errors,
+        });
+        return false;
+      }
+      return true;
     }
 
     handleSubmit = (e) => {
@@ -50,45 +49,44 @@ export class SignUpPage extends Component {
       const {
         username, password, name, email,
       } = this.state;
-      this.validateInput();
-      console.log(this.state.validationErrors);
-      console.log(this.state.toHome);
-      this.props.signUp({
-        username, password, name, email,
-      })
-        .then((res) => {
-          if (res.statusCode) {
-            // If request is successful, proceed to automatically sign in
-            this.props.signIn({ username, password })
-              .then((secondRes) => {
-                // If sign in is successful, relocate to Home page,
-                // Otherwise, go to SignIn page
-                if (secondRes.statusCode) {
-                  this.props.getUserData()
-                    .then((thirdRes) => {
-                      this.setState(prevState => ({ ...prevState, toHome: true }));
-                    });
-                } else {
-                  this.setState(prevState => ({ ...prevState, toSignIn: true }));
-                }
-              });
-          } else {
-            // If sign up request is failed, reset all the form input
-            // and display all the error messages as alerts
-            res.errorPromise
-              .then((error) => {
-                this.setState({
-                  username: '',
-                  password: '',
-                  name: '',
-                  email: '',
-                  toHome: false,
-                  toSignIn: false,
-                  alerts: error.message,
+      if (this.validateInput()) {
+        this.props.signUp({
+          username, password, name, email,
+        })
+          .then((res) => {
+            if (res.statusCode) {
+              // If request is successful, proceed to automatically sign in
+              this.props.signIn({ username, password })
+                .then((secondRes) => {
+                  // If sign in is successful, relocate to Home page,
+                  // Otherwise, go to SignIn page
+                  if (secondRes.statusCode) {
+                    this.props.getUserData()
+                      .then((thirdRes) => {
+                        this.setState(prevState => ({ ...prevState, toHome: true }));
+                      });
+                  } else {
+                    this.setState(prevState => ({ ...prevState, toSignIn: true }));
+                  }
                 });
-              });
-          }
-        });
+            } else {
+              // If sign up request is failed, reset all the form input
+              // and display all the error messages as alerts
+              res.errorPromise
+                .then((error) => {
+                  this.setState({
+                    username: '',
+                    password: '',
+                    name: '',
+                    email: '',
+                    toHome: false,
+                    toSignIn: false,
+                    alerts: error.message,
+                  });
+                });
+            }
+          });
+      }
     }
 
     handleChange = (e) => {
@@ -99,7 +97,7 @@ export class SignUpPage extends Component {
 
     render() {
       const {
-        username, password, name, email, toHome, toSignIn,
+        username, password, name, email, toHome, toSignIn, validationErrors,
       } = this.state;
 
       if (toHome) {
@@ -111,10 +109,16 @@ export class SignUpPage extends Component {
 
       return (
         <div>
+          <h2>Sign Up</h2>
           <Form onSubmit={this.handleSubmit}>
             <Form.Group>
               <Form.Label>Username</Form.Label>
-              <Form.Control type="text" name="username" onChange={this.handleChange} value={username} />
+              <Form.Control
+                type="text"
+                name="username"
+                onChange={this.handleChange}
+                value={username}
+              />
             </Form.Group>
             <Form.Group>
               <Form.Label>Password</Form.Label>

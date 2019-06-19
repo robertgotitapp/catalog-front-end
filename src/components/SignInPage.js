@@ -14,34 +14,56 @@ export class SignInPage extends Component {
       alerts: '',
     }
 
+    validateInput = () => {
+      const {
+        username, password,
+      } = this.state;
+      const errors = {};
+      if (username.length <= 5) {
+        errors.username = 'Please enter valid username';
+      }
+      if (password.length <= 8) {
+        errors.password = 'Please enter valid password';
+      }
+      if (Object.keys(errors).length !== 0) {
+        this.setState({
+          alerts: 'Please enter valid credentails.',
+        });
+        return false;
+      }
+      return true;
+    }
+
     handleSubmit = (e) => {
       const { username, password } = this.state;
 
       e.preventDefault();
-      this.props.signIn({ username, password })
-        .then((res) => {
+      if (this.validateInput()) {
+        this.props.signIn({ username, password })
+          .then((res) => {
           // If request is successful, return to Home page
-          if (res.statusCode) {
-            this.props.getUserData()
-              .then((nextRes) => {
-                if (nextRes.statusCode) {
-                  this.setState(prevState => ({ ...prevState, toHome: true }));
-                }
-              });
-          } else {
+            if (res.statusCode) {
+              this.props.getUserData()
+                .then((nextRes) => {
+                  if (nextRes.statusCode) {
+                    this.setState(prevState => ({ ...prevState, toHome: true }));
+                  }
+                });
+            } else {
             // if request is not successful, clear out the form
             // and display error message
-            res.errorPromise
-              .then((error) => {
-                this.setState({
-                  username: '',
-                  password: '',
-                  toHome: false,
-                  alerts: error.description,
+              res.errorPromise
+                .then((error) => {
+                  this.setState({
+                    username: '',
+                    password: '',
+                    toHome: false,
+                    alerts: error.description,
+                  });
                 });
-              });
-          }
-        });
+            }
+          });
+      }
     }
 
     handleChange = (e) => {
@@ -59,6 +81,7 @@ export class SignInPage extends Component {
 
       return (
         <div>
+          <h2> Sign In</h2>
           <Form onSubmit={this.handleSubmit}>
             <Form.Group>
               <Form.Label>Username</Form.Label>

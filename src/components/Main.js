@@ -10,8 +10,6 @@ import ItemDetail from './ItemDetail';
 import UpdateItem from './UpdateItem';
 
 class Main extends Component {
-  // Consider putting getAccessToken here or in NavBar
-
   render() {
     return (
       <div>

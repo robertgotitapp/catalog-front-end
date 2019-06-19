@@ -4,7 +4,6 @@ exports[`components/Item should render correctly 1`] = `
 <Card
   body={false}
   border="dark"
-  className="item-card"
 >
   <CardHeader
     as="h4"

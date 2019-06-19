@@ -1,62 +1,61 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`components/CategoryList should render correctly 1`] = `
-<div>
-  <Card
-    body={false}
-  >
-    <CardBody>
-      <CardTitle>
-        Categories
-      </CardTitle>
-    </CardBody>
-  </Card>
+<Card
+  body={false}
+>
+  <CardBody>
+    <CardTitle>
+      Categories
+    </CardTitle>
+  </CardBody>
   <ForwardRef>
-    <Bootstrap(ListGroupItem)
-      key="1"
+    <Nav
+      className="flex-column"
+      fill={false}
+      justify={false}
+      variant="pills"
     >
-      <Connect(Category)
-        category={
-          Object {
-            "created": "2019-06-17T13:46:18+00:00",
-            "description": "Laptop",
-            "id": 1,
-            "name": "Laptop",
-            "updated": "2019-06-17T13:46:18+00:00",
-          }
-        }
-      />
-    </Bootstrap(ListGroupItem)>
-    <Bootstrap(ListGroupItem)
-      key="2"
-    >
-      <Connect(Category)
-        category={
-          Object {
-            "created": "2019-06-17T13:46:25+00:00",
-            "description": "Books",
-            "id": 2,
-            "name": "Books",
-            "updated": "2019-06-17T13:46:25+00:00",
-          }
-        }
-      />
-    </Bootstrap(ListGroupItem)>
-    <Bootstrap(ListGroupItem)
-      key="3"
-    >
-      <Connect(Category)
-        category={
-          Object {
-            "created": "2019-06-17T13:46:48+00:00",
-            "description": "Speaker",
-            "id": 3,
-            "name": "Speaker",
-            "updated": "2019-06-17T13:46:48+00:00",
-          }
-        }
-      />
-    </Bootstrap(ListGroupItem)>
+      <NavItem
+        key="1"
+      >
+        <NavLink
+          as={[Function]}
+          disabled={false}
+          eventKey="1"
+          name="1"
+          onClick={[Function]}
+        >
+          Laptop
+        </NavLink>
+      </NavItem>
+      <NavItem
+        key="2"
+      >
+        <NavLink
+          as={[Function]}
+          disabled={false}
+          eventKey="2"
+          name="2"
+          onClick={[Function]}
+        >
+          Books
+        </NavLink>
+      </NavItem>
+      <NavItem
+        key="3"
+      >
+        <NavLink
+          as={[Function]}
+          disabled={false}
+          eventKey="3"
+          name="3"
+          onClick={[Function]}
+        >
+          Speaker
+        </NavLink>
+      </NavItem>
+    </Nav>
   </ForwardRef>
-</div>
+</Card>
 `;

@@ -11,7 +11,7 @@ export class CategoryList extends Component {
   state = { loading: true };
 
   componentDidMount() {
-    this.props.getCategories(0, PaginationConfig.ITEMS_PER_PAGE)
+    this.props.getCategories(0, PaginationConfig.CATEGORIES_PER_PAGE)
       .then((res) => {
         if (res.statusCode) {
           this.setState({ loading: false });

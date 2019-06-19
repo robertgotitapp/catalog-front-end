@@ -15,6 +15,29 @@ export class UpdateItem extends Component {
       alerts: '',
     }
 
+    validateInput = () => {
+      const {
+        name, description, price,
+      } = this.state;
+      const errors = {};
+      if (name.length <= 5) {
+        errors.name = 'Name must be longer than 5 characters.';
+      }
+      if (description > 200) {
+        errors.email = 'Description must be within 200 characters.';
+      }
+      if (price <= 0) {
+        errors.email = 'Price must be positive number.';
+      }
+      if (Object.keys(errors).length !== 0) {
+        this.setState({
+          alerts: errors,
+        });
+        return false;
+      }
+      return true;
+    }
+
     handleChange = (e) => {
       this.setState({
         [e.target.name]: e.target.value,
@@ -24,29 +47,31 @@ export class UpdateItem extends Component {
     handleSubmit = (e) => {
       e.preventDefault();
       const { name, price, description } = this.state;
-      this.props.updateItem(
-        this.props.item.category_id,
-        this.props.item.id,
-        { name, price, description },
-      )
-        .then((res) => {
-          if (res.statusCode) {
-            this.setState(prevState => ({ ...prevState, toHome: true }));
-          } else {
-            // If update item request is failed, reset all the form input
-            // and display all the error messages as alerts
-            res.errorPromise
-              .then((error) => {
-                this.setState({
-                  name: this.props.item.name,
-                  price: this.props.item.price,
-                  description: this.props.item.description,
-                  toHome: false,
-                  alerts: error.message,
+      if (this.validateInput) {
+        this.props.updateItem(
+          this.props.item.category_id,
+          this.props.item.id,
+          { name, price, description },
+        )
+          .then((res) => {
+            if (res.statusCode) {
+              this.setState(prevState => ({ ...prevState, toHome: true }));
+            } else {
+              // If update item request is failed, reset all the form input
+              // and display all the error messages as alerts
+              res.errorPromise
+                .then((error) => {
+                  this.setState({
+                    name: this.props.item.name,
+                    price: this.props.item.price,
+                    description: this.props.item.description,
+                    toHome: false,
+                    alerts: error.message,
+                  });
                 });
-              });
-          }
-        });
+            }
+          });
+      }
     }
 
     render() {
@@ -60,6 +85,7 @@ export class UpdateItem extends Component {
 
       return (
         <div>
+          <h2>Update Item</h2>
           <Form onSubmit={this.handleSubmit}>
             <Form.Group>
               <Form.Label>Item Name</Form.Label>

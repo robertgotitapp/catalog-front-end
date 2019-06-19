@@ -60,11 +60,6 @@ export const RequestType = {
   DELETE: 'DELETE',
 };
 
-// Config environment endpoint
-export const EnvironmentPrefix = {
-  LOCAL: 'http://127.0.0.1:5000',
-};
-
 export const PaginationConfig = {
   ITEMS_PER_PAGE: 9,
   CATEGORIES_PER_PAGE: 20,

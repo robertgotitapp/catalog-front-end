@@ -20,27 +20,49 @@ export class AddCategory extends Component {
       });
     }
 
+    validateInput = () => {
+      const {
+        name, description,
+      } = this.state;
+      const errors = {};
+      if (name.length <= 5) {
+        errors.name = 'Name must be longer than 5 characters.';
+      }
+      if (description > 200) {
+        errors.email = 'Description must be within 200 characters.';
+      }
+      if (Object.keys(errors).length !== 0) {
+        this.setState({
+          alerts: errors,
+        });
+        return false;
+      }
+      return true;
+    }
+
     handleSubmit = (e) => {
       e.preventDefault();
       const { name, description } = this.state;
-      this.props.addCategory({ name, description })
-        .then((res) => {
-          if (res.statusCode) {
-            this.setState(prevState => ({ ...prevState, toHome: true }));
-          } else {
+      if (this.validateInput()) {
+        this.props.addCategory({ name, description })
+          .then((res) => {
+            if (res.statusCode) {
+              this.setState(prevState => ({ ...prevState, toHome: true }));
+            } else {
             // If add category request is failed, reset all the form input
             // and display all the error messages as alerts
-            res.errorPromise
-              .then((error) => {
-                this.setState({
-                  name: '',
-                  description: '',
-                  toHome: false,
-                  alerts: error.message,
+              res.errorPromise
+                .then((error) => {
+                  this.setState({
+                    name: '',
+                    description: '',
+                    toHome: false,
+                    alerts: error.message,
+                  });
                 });
-              });
-          }
-        });
+            }
+          });
+      }
     }
 
     render() {
@@ -52,6 +74,7 @@ export class AddCategory extends Component {
 
       return (
         <div>
+          <h2> Add Category </h2>
           <Form onSubmit={this.handleSubmit}>
             <Form.Group>
               <Form.Label>Category Name</Form.Label>

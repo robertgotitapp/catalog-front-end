@@ -1,6 +1,6 @@
 # Catalog Application Frontend
 
-A client application built by React/Redux that allows users to sign in and manage categories and their own items.
+A client application built with React/Redux that allows users to sign in and manage categories and their own items.
 
 ## Available Scripts
 
