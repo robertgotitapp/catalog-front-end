@@ -30,8 +30,11 @@ export async function request(methodType, endpoint, headerTypes = null, data = n
 
   // Extract the status code from the response and throw errors if it is different from 200 and 201
   const { status } = response;
-  if (!(status === 200 || status === 201)) { throw response.json(); }
-  return response.json();
+  const responseJSON = await response.json();
+  if (!(status === 200 || status === 201)) {
+    throw responseJSON;
+  }
+  return responseJSON;
 }
 
 export const get = (

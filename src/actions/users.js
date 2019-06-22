@@ -22,6 +22,14 @@ export function getUserData() {
   };
 }
 
+export function loadCurrentUserData() {
+  const userId = localStorage.getItem('userId');
+  return {
+    type: UsersAction.LOAD_CURRENT_USER_DATA,
+    userId,
+  };
+}
+
 export function signOut() {
   return {
     type: UsersAction.SIGN_OUT,

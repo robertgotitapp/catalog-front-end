@@ -2,7 +2,7 @@ import { UsersAction } from '../../utils/const';
 
 const reducer = require('../users').default;
 
-describe('reducers/usersReducer', () => {
+describe('reducers/users', () => {
   it('sign out', () => {
     const action = {
       type: UsersAction.SIGN_OUT,

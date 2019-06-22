@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Alert from 'react-bootstrap/Alert';
 import { AddCategory } from '../AddCategory';
-import { update } from '../../utils/requests';
+import { update } from '../../../utils/requests';
 
 describe('components/AddCategory', () => {
   let wrapper;

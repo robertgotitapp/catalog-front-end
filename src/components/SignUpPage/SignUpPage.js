@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
-import { Redirect } from 'react-router-dom';
-import { signUp, signIn, getUserData } from '../actions/users';
-import { REGEX } from '../utils/const';
+import { signUp, signIn, getUserData } from '../../actions/users';
+import { REGEX } from '../../utils/const';
 
 export class SignUpPage extends Component {
     state = {
@@ -13,8 +12,6 @@ export class SignUpPage extends Component {
       password: '',
       name: '',
       email: '',
-      toHome: false,
-      toSignIn: false,
       alerts: '',
     }
 
@@ -35,7 +32,6 @@ export class SignUpPage extends Component {
       if (email.length < 8) {
         errors.email = 'Email must be at least 8 characters';
       }
-      console.log(errors);
       if (Object.keys(errors).length !== 0) {
         this.setState({
           alerts: errors,
@@ -65,28 +61,18 @@ export class SignUpPage extends Component {
                     this.props.getUserData()
                       .then((thirdRes) => {
                         if (thirdRes.statusCode) {
-                          this.setState(prevState => ({ ...prevState, toHome: true }));
+                          this.props.loadCurrentUserData();
+                          this.props.history.push('/');
                         }
                       });
                   } else {
-                    this.setState(prevState => ({ ...prevState, toSignIn: true }));
+                    this.props.history.push('/signin');
                   }
                 });
             } else {
-              // If sign up request is failed, reset all the form input
-              // and display all the error messages as alerts
-              res.errorPromise
-                .then((error) => {
-                  this.setState({
-                    username: '',
-                    password: '',
-                    name: '',
-                    email: '',
-                    toHome: false,
-                    toSignIn: false,
-                    alerts: error.message,
-                  });
-                });
+              this.setState({
+                alerts: res.errors.message,
+              });
             }
           });
       }
@@ -100,15 +86,8 @@ export class SignUpPage extends Component {
 
     render() {
       const {
-        username, password, name, email, toHome, toSignIn, validationErrors,
+        username, password, name, email,
       } = this.state;
-
-      if (toHome) {
-        return <Redirect to='/' />;
-      }
-      if (toSignIn) {
-        return <Redirect to='/signin' />;
-      }
 
       return (
         <div>

@@ -4,14 +4,13 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import { Redirect } from 'react-router-dom';
-import { addCategory } from '../actions/categories';
+import { addCategory } from '../../actions/categories';
 
 export class AddCategory extends Component {
     state = {
       name: '',
       description: '',
-      toHome: false,
-      alerts: '',
+      alerts: {},
     }
 
     handleChange = (e) => {
@@ -47,19 +46,11 @@ export class AddCategory extends Component {
         this.props.addCategory({ name, description })
           .then((res) => {
             if (res.statusCode) {
-              this.setState(prevState => ({ ...prevState, toHome: true }));
+              this.props.history.push('/');
             } else {
-              // If add category request is failed, reset all the form input
-              // and display all the error messages as alerts
-              res.errorPromise
-                .then((error) => {
-                  this.setState({
-                    name: '',
-                    description: '',
-                    toHome: false,
-                    alerts: error.message,
-                  });
-                });
+              this.setState({
+                alerts: res.errors.message,
+              });
             }
           });
       }
@@ -67,9 +58,6 @@ export class AddCategory extends Component {
 
     render() {
       const { name, description } = this.state;
-      if (this.state.toHome) {
-        return <Redirect to='/' />;
-      }
 
       return (
         <div>
@@ -104,9 +92,9 @@ export class AddCategory extends Component {
     }
 }
 
-function mapStateToProps({ usersReducer }) {
+function mapStateToProps({ users }) {
   return {
-    users: usersReducer,
+    users,
   };
 }
 

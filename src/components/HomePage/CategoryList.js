@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import Card from 'react-bootstrap/Card';
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
-import { getItems, selectItemPage } from '../actions/items';
-import { selectCurrentCategory, getCategories } from '../actions/categories';
-import { PaginationConfig } from '../utils/const';
+import { getItems, selectItemPage } from '../../actions/items';
+import { selectCurrentCategory, getCategories } from '../../actions/categories';
+import { PaginationConfig } from '../../utils/const';
 
 export class CategoryList extends Component {
   state = { loading: true };
@@ -55,10 +55,10 @@ export class CategoryList extends Component {
   }
 }
 
-function mapStateToProps({ categoriesReducer }) {
+function mapStateToProps({ categories }) {
   return {
-    categories: categoriesReducer.categories,
-    currentCategory: categoriesReducer.currentCategory,
+    categories: categories.categories,
+    currentCategory: categories.currentCategory,
   };
 }
 

@@ -4,18 +4,15 @@ import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import Pagination from 'react-bootstrap/Pagination';
 import Item from './Item';
-import { getItems, selectItemPage } from '../actions/items';
-import { PaginationConfig } from '../utils/const';
+import { getItems, selectItemPage } from '../../actions/items';
+import { PaginationConfig } from '../../utils/const';
 
 export class ItemList extends Component {
-  goToPage = (e) => {
-    if (e.target.innerHTML) {
-      const destinationPage = Number(e.target.innerHTML);
-      this.props.selectItemPage(destinationPage);
-      const offset = (destinationPage - 1) * PaginationConfig.ITEMS_PER_PAGE;
-      const limit = PaginationConfig.ITEMS_PER_PAGE;
-      this.props.getItems(this.props.selectedCategory, offset, limit);
-    }
+  goToPage = (destinationPage) => {
+    this.props.selectItemPage(destinationPage);
+    const offset = (destinationPage - 1) * PaginationConfig.ITEMS_PER_PAGE;
+    const limit = PaginationConfig.ITEMS_PER_PAGE;
+    this.props.getItems(this.props.selectedCategory, offset, limit);
   }
 
   render() {
@@ -53,7 +50,7 @@ export class ItemList extends Component {
                       key={pageNumber}
                       name={pageNumber}
                       className='clickablePage'
-                      onClick={this.goToPage}
+                      onClick={() => this.goToPage(pageNumber)}
                     >
                       {pageNumber}
                     </Pagination.Item>
@@ -67,12 +64,12 @@ export class ItemList extends Component {
   }
 }
 
-function mapStateToProps({ itemsReducer, categoriesReducer }) {
+function mapStateToProps({ items, categories }) {
   // Find out the right most page and left most page being display
   // in the pagination, then create an array containing list of
   // those pages being displayed
-  const lastPage = Math.floor((itemsReducer.totalItems - 1) / 10) + 1;
-  const { currentPage } = itemsReducer;
+  const lastPage = Math.floor((items.totalItems - 1) / 10) + 1;
+  const { currentPage } = items;
   const leftPage = Math.max(currentPage - 2, 1);
   const rightPage = Math.min(lastPage, currentPage + 2);
   const pageList = [];
@@ -80,9 +77,9 @@ function mapStateToProps({ itemsReducer, categoriesReducer }) {
     pageList.push(i);
   }
   return {
-    itemIds: Object.keys(itemsReducer.items),
-    items: itemsReducer.items,
-    selectedCategory: categoriesReducer.currentCategory,
+    itemIds: Object.keys(items.items),
+    items: items.items,
+    selectedCategory: categories.currentCategory,
     currentPage,
     pageList,
   };

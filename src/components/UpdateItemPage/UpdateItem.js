@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
-import { Redirect } from 'react-router-dom';
-import { updateItem } from '../actions/items';
+import { updateItem, getItems, selectItemPage } from '../../actions/items';
+import { PaginationConfig } from '../../utils/const';
 
 export class UpdateItem extends Component {
   constructor(props) {
@@ -13,7 +13,6 @@ export class UpdateItem extends Component {
       name: this.props.item.name,
       price: this.props.item.price,
       description: this.props.item.description,
-      toHome: false,
       alerts: '',
     };
   }
@@ -58,20 +57,15 @@ export class UpdateItem extends Component {
         )
           .then((res) => {
             if (res.statusCode) {
-              this.setState(prevState => ({ ...prevState, toHome: true }));
+              this.props.selectItemPage(PaginationConfig.DEFAULT_PAGE);
+              const limit = PaginationConfig.ITEMS_PER_PAGE;
+              this.props.getItems(this.props.currentCategory,
+                PaginationConfig.DEFAULT_OFFSET, limit);
+              this.props.history.push('/');
             } else {
-              // If update item request is failed, reset all the form input
-              // and display all the error messages as alerts
-              res.errorPromise
-                .then((error) => {
-                  this.setState({
-                    name: this.props.item.name,
-                    price: this.props.item.price,
-                    description: this.props.item.description,
-                    toHome: false,
-                    alerts: error.message,
-                  });
-                });
+              this.setState({
+                alerts: res.errors.message,
+              });
             }
           });
       }
@@ -79,12 +73,8 @@ export class UpdateItem extends Component {
 
     render() {
       const {
-        name, price, description, toHome,
+        name, price, description,
       } = this.state;
-
-      if (toHome) {
-        return <Redirect to='/' />;
-      }
 
       return (
         <div>
@@ -128,18 +118,20 @@ export class UpdateItem extends Component {
     }
 }
 
-function mapStateToProps({ itemsReducer, categoriesReducer }, { match }) {
+function mapStateToProps({ items, categories }, { match }) {
   const itemId = Number(match.params.id);
-  const selectedItem = Object.values(itemsReducer.items)
+  const selectedItem = Object.values(items.items)
     .find(item => item.id === itemId);
   return {
     item: selectedItem,
-    currentCategory: categoriesReducer.currentCategory,
+    currentCategory: categories.currentCategory,
   };
 }
 
 const mapDispatchtoProps = {
   updateItem,
+  getItems,
+  selectItemPage,
 };
 
 export default connect(mapStateToProps, mapDispatchtoProps)(UpdateItem);

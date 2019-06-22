@@ -12,7 +12,6 @@ const processRequest = store => next => (action) => {
         type: SUCCESS_ACTION,
         payload: result,
       });
-      // Must return result for component to get the result
       return { res: result, statusCode: RequestStatusCode.SUCCESS };
     })
     .catch((err) => {
@@ -20,8 +19,7 @@ const processRequest = store => next => (action) => {
         type: FAILED_ACTION,
         error: err,
       });
-      // Must return error for component to get the errors
-      return { errorPromise: err, statusCode: RequestStatusCode.FAILED };
+      return { errors: err, statusCode: RequestStatusCode.FAILED };
     });
 };
 

@@ -19,9 +19,9 @@ export class Item extends Component {
   }
 }
 
-function mapStateToProps({ itemsReducer }, { id }) {
+function mapStateToProps({ items }, { id }) {
   return {
-    item: itemsReducer.items[id],
+    item: items.items[id],
   };
 }
 

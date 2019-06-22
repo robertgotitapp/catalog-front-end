@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Alert from 'react-bootstrap/Alert';
 import { SignInPage } from '../SignInPage';
-import { signIn } from '../../actions/users';
+import { signIn } from '../../../actions/users';
 
 describe('components/SignInPage', () => {
   let wrapper;

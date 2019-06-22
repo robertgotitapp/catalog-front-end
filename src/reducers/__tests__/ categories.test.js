@@ -2,7 +2,7 @@ import { CategoriesAction } from '../../utils/const';
 
 const reducer = require('../categories').default;
 
-describe('reducers/categoriesReducer', () => {
+describe('reducers/categories', () => {
   it('add category success', () => {
     const action = {
       type: CategoriesAction.ADD_CATEGORY_SUCCESS,

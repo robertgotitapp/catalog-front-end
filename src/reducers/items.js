@@ -2,7 +2,7 @@ import { ItemsAction } from '../utils/const';
 
 const initialState = { items: {}, currentPage: null };
 
-export default function itemsReducer(state = initialState, action) {
+export default function items(state = initialState, action) {
   switch (action.type) {
     case ItemsAction.GET_ITEMS_SUCCESS:
       return {

@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import usersReducer from './users';
-import categoriesReducer from './categories';
-import itemsReducer from './items';
+import users from './users';
+import categories from './categories';
+import items from './items';
 
 export default combineReducers({
-  usersReducer,
-  categoriesReducer,
-  itemsReducer,
+  users,
+  categories,
+  items,
 });

@@ -3,8 +3,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { signOut } from '../actions/users';
-import Logo from '../static/images/logo.jpeg';
+import { signOut } from '../../actions/users';
+import Logo from '../../static/images/logo.jpeg';
 
 export class NavBar extends Component {
     handleSignOut = (e) => {
@@ -24,7 +24,7 @@ export class NavBar extends Component {
               />
             </Navbar.Brand>
             {
-              this.props.isLoggedIn
+              this.props.currentLoggedId
                 ? (
                   <Nav className="mr-auto">
                     <Nav.Item className="navItem">
@@ -63,9 +63,9 @@ export class NavBar extends Component {
     }
 }
 
-function mapStateToProps({ usersReducer }) {
+function mapStateToProps({ users }) {
   return {
-    isLoggedIn: !!localStorage.getItem('accessToken'),
+    currentLoggedId: users.userId,
   };
 }
 

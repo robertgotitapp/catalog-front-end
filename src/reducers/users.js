@@ -1,20 +1,16 @@
 import { UsersAction } from '../utils/const';
 
 const initialState = {
-  access_token: null,
-  signedUser: null,
-  items: null,
+  userId: null,
 };
 
-export default function usersReducer(state = initialState, action) {
+export default function users(state = initialState, action) {
   switch (action.type) {
-    // case UsersAction.SIGN_IN_SUCCESS:
-    //   return action.payload;
+    case UsersAction.LOAD_CURRENT_USER_DATA:
+      return { userId: action.userId };
     case UsersAction.SIGN_OUT:
       return {
-        items: null,
-        signedUser: null,
-        access_token: action.access_token,
+        userId: null,
       };
     default:
       return state;

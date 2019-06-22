@@ -2,7 +2,7 @@ import { ItemsAction } from '../../utils/const';
 
 const reducer = require('../items').default;
 
-describe('reducers/itemsReducer', () => {
+describe('reducers/items', () => {
   it('add item success', () => {
     const action = {
       type: ItemsAction.ADD_ITEM_SUCCESS,

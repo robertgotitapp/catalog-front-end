@@ -2,7 +2,7 @@ import { CategoriesAction } from '../utils/const';
 
 const initialState = { categories: {}, currentCategory: null };
 
-export default function categoriesReducer(state = initialState, action) {
+export default function categories(state = initialState, action) {
   switch (action.type) {
     case CategoriesAction.ADD_CATEGORY_SUCCESS:
       return {

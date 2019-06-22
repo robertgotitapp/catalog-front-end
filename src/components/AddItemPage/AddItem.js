@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
-import { Redirect } from 'react-router-dom';
-import { addItem } from '../actions/items';
+import { addItem } from '../../actions/items';
 
 export class AddItem extends Component {
     state = {
@@ -12,7 +11,6 @@ export class AddItem extends Component {
       price: 0,
       description: '',
       selectedCategory: 1,
-      toHome: false,
       alerts: '',
     }
 
@@ -54,21 +52,11 @@ export class AddItem extends Component {
         this.props.addItem(selectedCategory, { name, price, description })
           .then((res) => {
             if (res.statusCode) {
-              this.setState(prevState => ({ ...prevState, toHome: true }));
+              this.props.history.push('/');
             } else {
-            // If add item request is failed, reset all the form input
-            // and display all the error messages as alerts
-              res.errorPromise
-                .then((error) => {
-                  this.setState({
-                    name: '',
-                    price: 0,
-                    description: '',
-                    selectedCategory: null,
-                    toHome: false,
-                    alerts: error.message,
-                  });
-                });
+              this.setState({
+                alerts: res.errors.message,
+              });
             }
           });
       }
@@ -85,12 +73,8 @@ export class AddItem extends Component {
 
     render() {
       const {
-        name, price, description, toHome,
+        name, price, description,
       } = this.state;
-
-      if (toHome) {
-        return <Redirect to='/' />;
-      }
 
       return (
         <div>
@@ -141,10 +125,10 @@ export class AddItem extends Component {
     }
 }
 
-function mapStateToProps({ categoriesReducer }) {
+function mapStateToProps({ categories }) {
   return {
-    categoryIds: Object.keys(categoriesReducer.categories),
-    categories: categoriesReducer.categories,
+    categoryIds: Object.keys(categories.categories),
+    categories: categories.categories,
   };
 }
 

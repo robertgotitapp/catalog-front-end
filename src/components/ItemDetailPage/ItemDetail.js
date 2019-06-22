@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
-import { removeItem, getItems, selectItemPage } from '../actions/items';
+import { removeItem, getItems, selectItemPage } from '../../actions/items';
+import { PaginationConfig } from '../../utils/const';
 
 export class ItemDetail extends Component {
   state = {
-    toHome: false,
     alerts: '',
   }
 
@@ -20,28 +20,19 @@ export class ItemDetail extends Component {
       .then((res) => {
         if (res.statusCode) {
           // If request is successful, go to Home page
-          this.props.selectItemPage(1);
-          const limit = 10;
-          this.props.getItems(this.props.selectedCategory.id, 0, limit);
-          this.setState({ toHome: true });
+          this.props.selectItemPage(PaginationConfig.DEFAULT_PAGE);
+          const limit = PaginationConfig.ITEMS_PER_PAGE;
+          this.props.getItems(this.props.selectedCategory, PaginationConfig.DEFAULT_OFFSET, limit);
+          this.props.history.push('/');
         } else {
-          // if request is not successful, display error message
-          res.errorPromise
-            .then((error) => {
-              this.setState({
-                toHome: false,
-                alerts: error.description,
-              });
-            });
+          this.setState({
+            alerts: res.errors.description,
+          });
         }
       });
   }
 
   render() {
-    if (this.state.toHome) {
-      return <Redirect to='/' />;
-    }
-
     return (
       <div>
         <p name='name'>
@@ -86,15 +77,15 @@ export class ItemDetail extends Component {
   }
 }
 
-function mapStateToProps({ itemsReducer, categoriesReducer }, { match }) {
+function mapStateToProps({ items, categories, users }, { match }) {
   const itemId = Number(match.params.id);
-  const selectedItem = Object.values(itemsReducer.items)
+  const selectedItem = Object.values(items.items)
     .find(item => item.id === itemId);
-  const isAuthorized = Number(localStorage.getItem('userId')) === selectedItem.user_id;
+  const isAuthorized = Number(users.userId) === selectedItem.user_id;
   return {
     item: selectedItem,
-    selectedCategory: categoriesReducer.currentCategory,
-    currentPage: itemsReducer.currentPage,
+    selectedCategory: categories.currentCategory,
+    currentPage: items.currentPage,
     isAuthorized,
   };
 }

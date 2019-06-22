@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { Redirect } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
-import { signIn, getUserData } from '../actions/users';
+import { signIn, getUserData, loadCurrentUserData } from '../../actions/users';
 
 export class SignInPage extends Component {
     state = {
       username: '',
       password: '',
-      toHome: false,
       alerts: '',
     }
 
@@ -46,21 +44,16 @@ export class SignInPage extends Component {
               this.props.getUserData()
                 .then((nextRes) => {
                   if (nextRes.statusCode) {
-                    this.setState(prevState => ({ ...prevState, toHome: true }));
+                    this.props.loadCurrentUserData();
+                    this.props.history.push('/');
                   }
                 });
             } else {
-            // if request is not successful, clear out the form
-            // and display error message
-              res.errorPromise
-                .then((error) => {
-                  this.setState({
-                    username: '',
-                    password: '',
-                    toHome: false,
-                    alerts: error.description,
-                  });
-                });
+              this.setState({
+                username: '',
+                password: '',
+                alerts: res.errors.description,
+              });
             }
           });
       }
@@ -73,11 +66,7 @@ export class SignInPage extends Component {
     }
 
     render() {
-      const { username, password, toHome } = this.state;
-
-      if (toHome) {
-        return <Redirect to='/' />;
-      }
+      const { username, password } = this.state;
 
       return (
         <div>
@@ -111,6 +100,7 @@ export class SignInPage extends Component {
 const mapDispatchToProps = {
   signIn,
   getUserData,
+  loadCurrentUserData,
 };
 
 export default connect(null, mapDispatchToProps)(SignInPage);
