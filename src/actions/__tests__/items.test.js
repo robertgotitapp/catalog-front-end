@@ -1,6 +1,6 @@
 import configureStore from 'redux-mock-store';
 import {
-  addItem, getItems, removeItem, updateItem, selectItemPage,
+  addItem, getItems, removeItem, updateItem,
 } from '../items';
 import { ItemsAction, HeadersType } from '../../utils/const';
 import {

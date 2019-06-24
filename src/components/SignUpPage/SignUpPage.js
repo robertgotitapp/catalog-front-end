@@ -62,7 +62,7 @@ export class SignUpPage extends Component {
                       .then((thirdRes) => {
                         if (thirdRes.statusCode) {
                           this.props.loadCurrentUserData();
-                          this.props.history.push('/');
+                          this.props.history.push('/categories/1/items/1');
                         }
                       });
                   } else {

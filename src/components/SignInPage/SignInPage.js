@@ -45,7 +45,7 @@ export class SignInPage extends Component {
                 .then((nextRes) => {
                   if (nextRes.statusCode) {
                     this.props.loadCurrentUserData();
-                    this.props.history.push('/');
+                    this.props.history.push('/categories/1/items/1');
                   }
                 });
             } else {

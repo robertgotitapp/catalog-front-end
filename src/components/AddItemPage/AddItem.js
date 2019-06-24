@@ -52,7 +52,7 @@ export class AddItem extends Component {
         this.props.addItem(selectedCategory, { name, price, description })
           .then((res) => {
             if (res.statusCode) {
-              this.props.history.push('/');
+              this.props.history.push('/categories/1/items/1');
             } else {
               this.setState({
                 alerts: res.errors.message,

@@ -1,6 +1,6 @@
 import { ItemsAction } from '../utils/const';
 
-const initialState = { items: {}, currentPage: null };
+const initialState = { items: {} };
 
 export default function items(state = initialState, action) {
   switch (action.type) {
@@ -19,11 +19,6 @@ export default function items(state = initialState, action) {
       return {
         ...state,
         [action.payload.id]: action.payload,
-      };
-    case ItemsAction.SELECT_ITEM_PAGE:
-      return {
-        ...state,
-        currentPage: action.payload.currentPage,
       };
     default:
       return state;

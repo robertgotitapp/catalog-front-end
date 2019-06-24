@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
-import { updateItem, getItems, selectItemPage } from '../../actions/items';
+import { updateItem, getItems } from '../../actions/items';
 import { PaginationConfig } from '../../utils/const';
 
 export class UpdateItem extends Component {
@@ -57,11 +57,10 @@ export class UpdateItem extends Component {
         )
           .then((res) => {
             if (res.statusCode) {
-              this.props.selectItemPage(PaginationConfig.DEFAULT_PAGE);
               const limit = PaginationConfig.ITEMS_PER_PAGE;
               this.props.getItems(this.props.currentCategory,
                 PaginationConfig.DEFAULT_OFFSET, limit);
-              this.props.history.push('/');
+              this.props.history.push(`/categories/${this.props.currentCategory}/items/1`);
             } else {
               this.setState({
                 alerts: res.errors.message,
@@ -131,7 +130,6 @@ function mapStateToProps({ items, categories }, { match }) {
 const mapDispatchtoProps = {
   updateItem,
   getItems,
-  selectItemPage,
 };
 
 export default connect(mapStateToProps, mapDispatchtoProps)(UpdateItem);

@@ -4,15 +4,14 @@ import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import Pagination from 'react-bootstrap/Pagination';
 import Item from './Item';
-import { getItems, selectItemPage } from '../../actions/items';
+import { getItems } from '../../actions/items';
 import { PaginationConfig } from '../../utils/const';
 
 export class ItemList extends Component {
   goToPage = (destinationPage) => {
-    this.props.selectItemPage(destinationPage);
     const offset = (destinationPage - 1) * PaginationConfig.ITEMS_PER_PAGE;
-    const limit = PaginationConfig.ITEMS_PER_PAGE;
-    this.props.getItems(this.props.selectedCategory, offset, limit);
+    this.props.getItems(this.props.categoryId, offset, PaginationConfig.ITEMS_PER_PAGE);
+    this.props.history.push(`/categories/${this.props.categoryId}/items/${destinationPage}`);
   }
 
   render() {
@@ -35,7 +34,7 @@ export class ItemList extends Component {
               // Current Page does not have onClick event but have active attribute
               // and likewise.
               this.props.pageList.map(pageNumber => (
-                pageNumber === this.props.currentPage
+                Number(pageNumber) === Number(this.props.pageNumber)
                   ? (
                     <Pagination.Item
                       key={pageNumber}
@@ -64,14 +63,13 @@ export class ItemList extends Component {
   }
 }
 
-function mapStateToProps({ items, categories }) {
+function mapStateToProps({ items }, { pageNumber }) {
   // Find out the right most page and left most page being display
   // in the pagination, then create an array containing list of
   // those pages being displayed
   const lastPage = Math.floor((items.totalItems - 1) / 10) + 1;
-  const { currentPage } = items;
-  const leftPage = Math.max(currentPage - 2, 1);
-  const rightPage = Math.min(lastPage, currentPage + 2);
+  const leftPage = Math.max(pageNumber - 2, 1);
+  const rightPage = Math.min(lastPage, pageNumber + 2);
   const pageList = [];
   for (let i = leftPage; i <= rightPage; i += 1) {
     pageList.push(i);
@@ -79,15 +77,13 @@ function mapStateToProps({ items, categories }) {
   return {
     itemIds: Object.keys(items.items),
     items: items.items,
-    selectedCategory: categories.currentCategory,
-    currentPage,
+    pageNumber,
     pageList,
   };
 }
 
 const mapDispatchToProps = {
   getItems,
-  selectItemPage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemList);

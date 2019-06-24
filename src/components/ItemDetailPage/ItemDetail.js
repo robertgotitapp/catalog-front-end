@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
-import { removeItem, getItems, selectItemPage } from '../../actions/items';
+import { removeItem, getItems } from '../../actions/items';
 import { PaginationConfig } from '../../utils/const';
 
 export class ItemDetail extends Component {
@@ -20,10 +20,12 @@ export class ItemDetail extends Component {
       .then((res) => {
         if (res.statusCode) {
           // If request is successful, go to Home page
-          this.props.selectItemPage(PaginationConfig.DEFAULT_PAGE);
-          const limit = PaginationConfig.ITEMS_PER_PAGE;
-          this.props.getItems(this.props.selectedCategory, PaginationConfig.DEFAULT_OFFSET, limit);
-          this.props.history.push('/');
+          this.props.getItems(
+            this.props.selectedCategory,
+            PaginationConfig.DEFAULT_OFFSET,
+            PaginationConfig.ITEMS_PER_PAGE,
+          );
+          this.props.history.push(`/categories/${this.props.selectedCategory}/items/1`);
         } else {
           this.setState({
             alerts: res.errors.description,
@@ -85,7 +87,6 @@ function mapStateToProps({ items, categories, users }, { match }) {
   return {
     item: selectedItem,
     selectedCategory: categories.currentCategory,
-    currentPage: items.currentPage,
     isAuthorized,
   };
 }
@@ -93,7 +94,6 @@ function mapStateToProps({ items, categories, users }, { match }) {
 const mapDispatchToProps = {
   getItems,
   removeItem,
-  selectItemPage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemDetail);

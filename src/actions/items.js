@@ -37,10 +37,3 @@ export function updateItem(categoryId, itemId, item) {
     ),
   };
 }
-
-export function selectItemPage(pageNumber) {
-  return {
-    type: ItemsAction.SELECT_ITEM_PAGE,
-    payload: { currentPage: pageNumber },
-  };
-}

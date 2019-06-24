@@ -3,37 +3,31 @@ import { connect } from 'react-redux';
 import Card from 'react-bootstrap/Card';
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
-import { getItems, selectItemPage } from '../../actions/items';
+import { getItems } from '../../actions/items';
 import { selectCurrentCategory, getCategories } from '../../actions/categories';
 import { PaginationConfig } from '../../utils/const';
 
 export class CategoryList extends Component {
-  state = { loading: true };
-
   componentDidMount() {
-    this.props.getCategories(0, PaginationConfig.CATEGORIES_PER_PAGE)
-      .then((res) => {
-        if (res.statusCode) {
-          this.setState({ loading: false });
-        }
-      });
+    this.props.selectCurrentCategory(this.props.categoryId);
+    this.props.getItems(
+      this.props.categoryId,
+      this.props.pageNumber,
+      PaginationConfig.ITEMS_PER_PAGE,
+    );
   }
 
   viewCategory = (e) => {
     const categoryChosen = Number(e.target.name);
     this.props.selectCurrentCategory(categoryChosen);
-    this.props.selectItemPage(PaginationConfig.DEFAULT_PAGE);
     this.props.getItems(categoryChosen,
       PaginationConfig.DEFAULT_OFFSET,
       PaginationConfig.ITEMS_PER_PAGE);
+    this.props.history.push(`/categories/${categoryChosen}/items/1`);
   };
 
 
   render() {
-    if (this.state.loading === true) {
-      return <div className='loader'> ...loading </div>;
-    }
-
     return (
       <Card>
         <Card.Body>
@@ -43,7 +37,11 @@ export class CategoryList extends Component {
           <Nav variant="pills" className="flex-column">
             { Object.keys(this.props.categories).map(key => (
               <Nav.Item key={key}>
-                <Nav.Link eventKey={key} name={key} onClick={this.viewCategory}>
+                <Nav.Link
+                  eventKey={key}
+                  name={key}
+                  onClick={this.viewCategory}
+                >
                   {this.props.categories[key].name}
                 </Nav.Link>
               </Nav.Item>
@@ -55,10 +53,12 @@ export class CategoryList extends Component {
   }
 }
 
-function mapStateToProps({ categories }) {
+function mapStateToProps({ categories }, { categoryId, pageNumber }) {
   return {
     categories: categories.categories,
-    currentCategory: categories.currentCategory,
+    currentCategory: categoryId,
+    pageNumber,
+    // currentCategory: categories.currentCategory,
   };
 }
 
@@ -66,7 +66,6 @@ const mapDispatchToProps = {
   getCategories,
   selectCurrentCategory,
   getItems,
-  selectItemPage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryList);

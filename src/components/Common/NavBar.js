@@ -10,6 +10,7 @@ export class NavBar extends Component {
     handleSignOut = (e) => {
       e.preventDefault();
       this.props.signOut();
+      this.props.history.push('/categories/1/items/1');
     }
 
     render() {
@@ -28,7 +29,7 @@ export class NavBar extends Component {
                 ? (
                   <Nav className="mr-auto">
                     <Nav.Item className="navItem">
-                      <Link name='home' to='/'>Home</Link>
+                      <Link name='home' to='/categories/1/items/1'>Home</Link>
                     </Nav.Item>
                     <Nav.Item className="navItem">
                       <Link name='addcategory' to='/newcategory'>Add Category</Link>
@@ -37,7 +38,7 @@ export class NavBar extends Component {
                       <Link name='additem' to='/newitem'>Add Item</Link>
                     </Nav.Item>
                     <Nav.Item className="navItem">
-                      <Link name='signout' onClick={this.handleSignOut} to='/'>
+                      <Link name='signout' onClick={this.handleSignOut} to='/categories/1/items/1'>
                     Sign Out
                       </Link>
                     </Nav.Item>
@@ -46,7 +47,7 @@ export class NavBar extends Component {
                 : (
                   <Nav className="mr-auto">
                     <Nav.Item className="navItem">
-                      <Link name='home' to='/'>Home</Link>
+                      <Link name='home' to='/categories/1/items/1'>Home</Link>
                     </Nav.Item>
                     <Nav.Item className="navItem">
                       <Link name='signin' to='/signin'>Sign In</Link>

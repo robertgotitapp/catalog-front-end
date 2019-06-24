@@ -10,10 +10,18 @@ export class Home extends Component {
     return (
       <CardGroup>
         <Col sm={3}>
-          <CategoryList />
+          <CategoryList
+            categoryId={this.props.match.params.categoryId}
+            pageNumber={this.props.match.params.pageNumber}
+            history={this.props.history}
+          />
         </Col>
         <Col sm={9}>
-          <ItemList />
+          <ItemList
+            categoryId={this.props.match.params.categoryId}
+            pageNumber={this.props.match.params.pageNumber}
+            history={this.props.history}
+          />
         </Col>
       </CardGroup>
     );

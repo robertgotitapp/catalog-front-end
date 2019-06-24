@@ -46,7 +46,7 @@ export class AddCategory extends Component {
         this.props.addCategory({ name, description })
           .then((res) => {
             if (res.statusCode) {
-              this.props.history.push('/');
+              this.props.history.push('/categories/1/items/1');
             } else {
               this.setState({
                 alerts: res.errors.message,
