@@ -18,6 +18,8 @@ describe('components/SignUpPage', () => {
       getUserData: jest.fn(() => Promise.resolve({
         statusCode: 1,
       })),
+      history: { push: jest.fn() },
+      loadCurrentUserData: jest.fn(),
     };
   });
 
@@ -100,17 +102,17 @@ describe('components/SignUpPage', () => {
     expect(wrapper.state().name).toEqual('User Name');
   });
 
-  it('should change state toHome to true when valid user data is submitted', async () => {
+  it('should trigger history push function to true when valid user data is submitted', async () => {
     setup();
     inputValidUserData();
     submitForm();
     await Promise.resolve();
     await Promise.resolve();
     await Promise.resolve();
-    expect(wrapper.state().toHome).toEqual(true);
+    expect(props.history.push).toBeCalled();
   });
 
-  it('should change state toSignIn to true when signUp request is success and signIn request is failed', async () => {
+  it('should trigger history push function when signUp request is success and signIn request is failed', async () => {
     props = {
       signUp: jest.fn(() => Promise.resolve({
         statusCode: 1,
@@ -121,24 +123,26 @@ describe('components/SignUpPage', () => {
       getUserData: jest.fn(() => Promise.resolve({
         statusCode: 1,
       })),
+      history: { push: jest.fn() },
+      loadCurrentUserData: jest.fn(),
     };
     setup();
     inputValidUserData();
     submitForm();
     await Promise.resolve();
     await Promise.resolve();
-    expect(wrapper.state().toSignIn).toEqual(true);
+    expect(props.history.push).toBeCalled();
   });
 
   it('should display Alerts when signUp request is Failed', async () => {
     props = {
       signUp: jest.fn(() => Promise.resolve({
         statusCode: 0,
-        errorPromise: Promise.resolve({
+        errors: {
           message: {
             name: 'Username has been taken',
           },
-        }),
+        },
       })),
       signIn: jest.fn(() => Promise.resolve({
         statusCode: 0,

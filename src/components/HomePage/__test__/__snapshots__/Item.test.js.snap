@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/Item should render correctly 1`] = `
+<Card
+  body={false}
+  border="dark"
+>
+  <CardHeader
+    as="h4"
+    name="name"
+  >
+    Item 4
+  </CardHeader>
+  <CardBody
+    name="price"
+  >
+    Price: $
+    19
+  </CardBody>
+  <CardText
+    name="description"
+  >
+    Item 4
+  </CardText>
+</Card>
+`;

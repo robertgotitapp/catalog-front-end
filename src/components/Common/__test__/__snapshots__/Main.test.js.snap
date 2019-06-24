@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/Home should render correctly when logged in 1`] = `
+<div>
+  <Connect(NavBar) />
+  <div>
+    <Route
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(AddCategory)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      path="/newcategory"
+    />
+    <Route
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(AddItem)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      path="/newitem"
+    />
+    <Route
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(UpdateItem)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      path="/items/:id/update"
+    />
+  </div>
+  <Route
+    component={
+      Object {
+        "$$typeof": Symbol(react.memo),
+        "WrappedComponent": [Function],
+        "compare": null,
+        "displayName": "Connect(ItemDetail)",
+        "type": [Function],
+      }
+    }
+    exact={true}
+    path="/items/:id"
+  />
+  <Route
+    component={
+      Object {
+        "$$typeof": Symbol(react.memo),
+        "WrappedComponent": [Function],
+        "compare": null,
+        "displayName": "Connect(Home)",
+        "type": [Function],
+      }
+    }
+    exact={true}
+    path="/categories/:categoryId/items/:pageNumber"
+  />
+</div>
+`;
+
+exports[`components/Home should render correctly when logged out 1`] = `
+<div>
+  <Connect(NavBar) />
+  <div>
+    <Route
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(SignInPage)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      path="/signin"
+    />
+    <Route
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(SignUpPage)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      path="/signup"
+    />
+  </div>
+  <Route
+    component={
+      Object {
+        "$$typeof": Symbol(react.memo),
+        "WrappedComponent": [Function],
+        "compare": null,
+        "displayName": "Connect(ItemDetail)",
+        "type": [Function],
+      }
+    }
+    exact={true}
+    path="/items/:id"
+  />
+  <Route
+    component={
+      Object {
+        "$$typeof": Symbol(react.memo),
+        "WrappedComponent": [Function],
+        "compare": null,
+        "displayName": "Connect(Home)",
+        "type": [Function],
+      }
+    }
+    exact={true}
+    path="/categories/:categoryId/items/:pageNumber"
+  />
+</div>
+`;

@@ -43,6 +43,7 @@ describe('components/AddItem', () => {
       addItem: jest.fn(() => Promise.resolve({
         statusCode: 1,
       })),
+      history: { push: jest.fn() },
     };
   });
 
@@ -126,12 +127,12 @@ describe('components/AddItem', () => {
     expect(wrapper.state().selectedCategory).toEqual(2);
   });
 
-  it('should change state toHome to true when valid item detail is submitted', async () => {
+  it('should trigger history push function when valid item detail is submitted', async () => {
     setup();
     inputValidItemDetail();
     submitForm();
     await Promise.resolve();
-    expect(wrapper.state().toHome).toEqual(true);
+    expect(props.history.push).toBeCalled();
   });
 
 
@@ -177,17 +178,16 @@ describe('components/AddItem', () => {
       },
       addItem: jest.fn(() => Promise.resolve({
         statusCode: 0,
-        errorPromise: Promise.resolve({
+        errors: {
           message: {
             name: 'Item name has to be at least 5 characters',
           },
-        }),
+        },
       })),
     };
     setup();
     inputValidItemDetail();
     submitForm();
-    await Promise.resolve();
     await Promise.resolve();
     expect(wrapper.find(Alert)).toHaveLength(1);
   });

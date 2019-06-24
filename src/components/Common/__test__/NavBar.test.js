@@ -5,55 +5,59 @@ import { NavBar } from '../NavBar';
 describe('components/NavBar', () => {
   describe('when user is logged in', () => {
     const props = {
-      isLoggedIn: true,
+      currentLoggedId: 1,
+      signOut: jest.fn(),
+      history: { push: jest.fn() },
     };
-    const container = shallow(<NavBar {...props} />);
+    const wrapper = shallow(<NavBar {...props} />);
 
     it('should render correctly', () => {
-      expect(container).toMatchSnapshot();
+      expect(wrapper).toMatchSnapshot();
     });
 
     it('should have 1 Add Category Link', () => {
-      expect(container.find('[name="addcategory"]')).toHaveLength(1);
+      expect(wrapper.find('[name="addcategory"]')).toHaveLength(1);
     });
 
     it('should have 1 Home Link', () => {
-      expect(container.find('[name="home"]')).toHaveLength(1);
+      expect(wrapper.find('[name="home"]')).toHaveLength(1);
     });
 
     it('should have 1 Add Item Link', () => {
-      expect(container.find('[name="additem"]')).toHaveLength(1);
+      expect(wrapper.find('[name="additem"]')).toHaveLength(1);
     });
 
     it('should trigger handler when Sign Out is clicked', () => {
-      container.instance().handleSignOut = jest.fn();
-      container.instance().forceUpdate();
-      const signOutLink = container.find('[name="signout"]');
-      signOutLink.simulate('click');
-      expect(container.instance().handleSignOut).toHaveBeenCalled();
+      wrapper.instance().handleSignOut({
+        preventDefault: jest.fn(),
+      });
+      expect(props.signOut).toHaveBeenCalled();
+      expect(props.history.push).toBeCalled();
     });
   });
 
   describe('when user is not logged in', () => {
     const props = {
-      isLoggedIn: false,
+      currentLoggedId: null,
+      signOut: jest.fn(),
+      history: { push: jest.fn() },
     };
-    const container = shallow(<NavBar {...props} />);
+    const wrapper = shallow(<NavBar {...props} />);
 
     it('should render correctly', () => {
-      expect(container).toMatchSnapshot();
+      expect(wrapper).toMatchSnapshot();
     });
 
     it('should have 1 Sign In Link', () => {
-      expect(container.find('[name="signin"]')).toHaveLength(1);
+      expect(wrapper.find('[name="signin"]')).toHaveLength(1);
     });
 
     it('should have 1 Home Link', () => {
-      expect(container.find('[name="home"]')).toHaveLength(1);
+      expect(wrapper.find('[name="home"]')).toHaveLength(1);
     });
 
     it('should have 1 Sign Out Link', () => {
-      expect(container.find('[name="signup"]')).toHaveLength(1);
+      expect(wrapper.find('[name="signup"]')).toHaveLength(1);
     });
   });
 });

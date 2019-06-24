@@ -17,6 +17,7 @@ describe('components/AddCategory', () => {
       addCategory: jest.fn(() => Promise.resolve({
         statusCode: 1,
       })),
+      history: { push: jest.fn() },
     };
   });
 
@@ -72,12 +73,12 @@ describe('components/AddCategory', () => {
     expect(wrapper.state().description).toEqual('description');
   });
 
-  it('should change state toHome to true when valid category detail is submitted', async () => {
+  it('should trigger history push function when valid category detail is submitted', async () => {
     setup();
     inputValidNameAndDescription();
     submitForm();
     await Promise.resolve();
-    expect(wrapper.state().toHome).toEqual(true);
+    expect(props.history.push).toBeCalled();
   });
 
   it('should render Alert when invalid cateogry detail is submitted', async () => {
@@ -91,11 +92,11 @@ describe('components/AddCategory', () => {
     props = {
       addCategory: jest.fn(() => Promise.resolve({
         statusCode: 0,
-        errorPromise: Promise.resolve({
+        errors: {
           message: {
             name: 'Category name already existed',
           },
-        }),
+        },
       })),
     };
     setup();

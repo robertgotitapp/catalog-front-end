@@ -32,20 +32,31 @@ exports[`components/NavBar when user is logged in should render correctly 1`] = 
         className="navItem"
       >
         <Link
-          name="signin"
-          to="/signin"
+          name="addcategory"
+          to="/newcategory"
         >
-          Sign In
+          Add Category
         </Link>
       </NavItem>
       <NavItem
         className="navItem"
       >
         <Link
-          name="signup"
-          to="/signup"
+          name="additem"
+          to="/newitem"
         >
-          Sign Up
+          Add Item
+        </Link>
+      </NavItem>
+      <NavItem
+        className="navItem"
+      >
+        <Link
+          name="signout"
+          onClick={[Function]}
+          to="/categories/1/items/1"
+        >
+          Sign Out
         </Link>
       </NavItem>
     </Nav>

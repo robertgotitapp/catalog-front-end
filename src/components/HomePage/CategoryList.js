@@ -58,7 +58,6 @@ function mapStateToProps({ categories }, { categoryId, pageNumber }) {
     categories: categories.categories,
     currentCategory: categoryId,
     pageNumber,
-    // currentCategory: categories.currentCategory,
   };
 }
 

@@ -36,6 +36,7 @@ describe('components/ItemDetail', () => {
         statusCode: 1,
       })),
       isAuthorized: true,
+      history: { push: jest.fn() },
     };
   });
 
@@ -88,11 +89,11 @@ describe('components/ItemDetail', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should set toHome state to true when delete item successfully', async () => {
+  it('should trigger history push function when delete item successfully', async () => {
     setup();
     clickDeleteBtn();
     await Promise.resolve();
-    expect(wrapper.state().toHome).toEqual(true);
+    expect(props.history.push).toBeCalled();
   });
 
   it('should trigger alert when delete item request is failed', async () => {
@@ -119,9 +120,9 @@ describe('components/ItemDetail', () => {
       })),
       removeItem: jest.fn(() => Promise.resolve({
         statusCode: 0,
-        errorPromise: Promise.resolve({
+        errors: {
           description: 'Failed to delete item',
-        }),
+        },
       })),
       selectItemPage: jest.fn(() => Promise.resolve({
         statusCode: 1,

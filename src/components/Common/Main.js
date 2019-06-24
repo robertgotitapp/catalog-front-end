@@ -13,7 +13,7 @@ import { loadCurrentUserData } from '../../actions/users';
 import { getCategories } from '../../actions/categories';
 import { PaginationConfig } from '../../utils/const';
 
-class Main extends Component {
+export class Main extends Component {
   componentDidMount() {
     this.props.loadCurrentUserData();
     this.props.getCategories(0, PaginationConfig.CATEGORIES_PER_PAGE);

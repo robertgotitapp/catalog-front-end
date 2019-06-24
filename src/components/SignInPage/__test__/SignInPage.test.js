@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Alert from 'react-bootstrap/Alert';
 import { SignInPage } from '../SignInPage';
-import { signIn } from '../../../actions/users';
 
 describe('components/SignInPage', () => {
   let wrapper;
@@ -16,6 +15,8 @@ describe('components/SignInPage', () => {
       getUserData: jest.fn(() => Promise.resolve({
         statusCode: 1,
       })),
+      history: { push: jest.fn() },
+      loadCurrentUserData: jest.fn(),
     };
   });
 
@@ -68,13 +69,13 @@ describe('components/SignInPage', () => {
     expect(wrapper.state().password).toEqual('Password1');
   });
 
-  it('should change state toHome to true when valid credentail is submitted', async () => {
+  it('should trigger history push function when valid credentail is submitted', async () => {
     setup();
     inputValidCredential();
     submitForm();
     await Promise.resolve();
     await Promise.resolve();
-    expect(wrapper.state().toHome).toEqual(true);
+    expect(props.history.push).toBeCalled();
   });
 
   it('should render Alert when invalid credential is submitted', async () => {
@@ -88,9 +89,9 @@ describe('components/SignInPage', () => {
     props = {
       signIn: jest.fn(() => Promise.resolve({
         statusCode: 0,
-        errorPromise: Promise.resolve({
+        errors: {
           description: 'Invalid Credential',
-        }),
+        },
       })),
       getUserData: jest.fn(() => Promise.resolve({
         statusCode: 0,

@@ -113,9 +113,7 @@ describe('components/ItemList', () => {
       getItems: jest.fn(() => Promise.resolve({
         statusCode: 1,
       })),
-      selectItemPage: jest.fn(() => Promise.resolve({
-        statusCode: 1,
-      })),
+      history: { push: jest.fn() },
     };
   });
 
@@ -133,7 +131,7 @@ describe('components/ItemList', () => {
     wrapper.find('[name=2]').simulate('click', {
       target: { innerHTML: '2' },
     });
-    expect(props.selectItemPage).toHaveBeenCalled();
     expect(props.getItems).toHaveBeenCalled();
+    expect(props.history.push).toBeCalled();
   });
 });

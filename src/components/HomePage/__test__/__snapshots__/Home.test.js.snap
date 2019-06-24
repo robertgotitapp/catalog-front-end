@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/Home should render correctly 1`] = `
+<CardGroup>
+  <Col
+    sm={3}
+  >
+    <Connect(CategoryList)
+      categoryId={1}
+      pageNumber={1}
+    />
+  </Col>
+  <Col
+    sm={9}
+  >
+    <Connect(ItemList)
+      categoryId={1}
+      pageNumber={1}
+    />
+  </Col>
+</CardGroup>
+`;
