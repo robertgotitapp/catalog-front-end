@@ -74,7 +74,7 @@ describe('signOut', () => {
     store.dispatch(signOut());
     const actions = store.getActions();
     const actionTriggered = actions.find(action => action.type === UsersAction.SIGN_OUT);
-    expect(actionTriggered.access_token).toEqual(response);
+    expect(actionTriggered).toHaveLength(1);
   });
 });
 

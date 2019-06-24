@@ -25,14 +25,14 @@ export class SignUpPage extends Component {
       if (username.length <= 5) {
         errors.username = 'Username must be at least 5 characters.';
       }
-      if (password.length < 8) {
-        errors.password = 'Password must be at least 8 characters';
+      if (!password.match(REGEX.PASSWORD)) {
+        errors.password = 'Password must be longer than 8 characters and have 1 least 1 number and 1 letter';
       }
       if (name.length <= 5) {
         errors.name = 'Name must be at least 5 characters.';
       }
-      if (email.length < 8) {
-        errors.email = 'Email must be at least 8 characters';
+      if (!email.match(REGEX.EMAIL)) {
+        errors.email = 'Must be a valid email address';
       }
       if (Object.keys(errors).length !== 0) {
         this.setState({

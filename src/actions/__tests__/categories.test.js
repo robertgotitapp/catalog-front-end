@@ -2,6 +2,9 @@ import configureStore from 'redux-mock-store';
 import { addCategory, getCategories, selectCurrentCategory } from '../categories';
 import { CategoriesAction, HeadersType } from '../../utils/const';
 import { post, get } from '../../utils/requests';
+import customMiddleware from '../../middlewares';
+
+const middlewares = [customMiddleware];
 
 describe('addCategory', () => {
   it('should return correct action object', async () => {
@@ -14,13 +17,13 @@ describe('addCategory', () => {
 
     // Set up mock store
     const initialState = {};
-    const mockStore = configureStore();
+    const mockStore = configureStore(middlewares);
     const store = mockStore(initialState);
-    const spy = jest.spyOn(store, 'dispatch');
+    // const spy = jest.spyOn(mockStore.dispatch, 'addCategory');
 
     // dispatch the action through the mock store and
     // get the result action to compare with the expected response
-    await store.dispatch(addCategory({
+    await mockStore.dispatch(addCategory({
       name: 'Category 1',
       description: 'Description of Category 1',
     }));

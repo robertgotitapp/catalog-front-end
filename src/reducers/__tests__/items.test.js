@@ -90,15 +90,4 @@ describe('reducers/items', () => {
       user_id: 1,
     });
   });
-
-  it('select item page', () => {
-    const action = {
-      type: ItemsAction.SELECT_ITEM_PAGE,
-      payload: {
-        currentPage: 2,
-      },
-    };
-    const result = reducer(undefined, action);
-    expect(result.currentPage).toEqual(2);
-  });
 });

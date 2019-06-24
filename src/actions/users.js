@@ -36,6 +36,5 @@ export const loadCurrentUserData = () => (dispatch) => {
 export const signOut = () => (dispatch) => {
   dispatch({
     type: UsersAction.SIGN_OUT,
-    access_token: null,
   });
 };
