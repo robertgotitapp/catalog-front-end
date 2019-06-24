@@ -1,95 +1,63 @@
 import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import {
   signUp, signIn, signOut, getUserData,
 } from '../users';
 import { UsersAction, HeadersType } from '../../utils/const';
 import { post, get } from '../../utils/requests';
 
-describe('signUp', () => {
-  it('should return correct action object', async () => {
-    const response = post(
-      '/users',
-      [HeadersType.CONTENTTYPE], {
-        username: 'user01',
-        password: 'Password1',
-        name: 'User Name 01',
-        email: 'user01@gmail.com',
-      },
-    );
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
 
-    // Set up mock store
-    const initialState = {};
-    const mockStore = configureStore();
-    const store = mockStore(initialState);
+describe('actions/users', () => {
+  const store = mockStore({});
 
-    // dispatch the action through the mock store and
-    // get the result action to compare with the expected response
-    await store.dispatch(signUp({
+  beforeEach(() => {
+    store.clearActions();
+  });
+
+  it('should create SIGN_UP when signUp is called', async () => {
+    const user = {
       username: 'user01',
       password: 'Password1',
       name: 'User Name 01',
       email: 'user01@gmail.com',
-    }));
+    };
+    store.dispatch(signUp(user));
     const actions = store.getActions();
-    const actionTriggered = actions.find(action => action.type === UsersAction.SIGN_UP);
-    expect(actionTriggered.promise).toEqual(response);
+    expect(actions[0]).toMatchObject({
+      type: UsersAction.SIGN_UP,
+      promise: post('/users', [HeadersType.CONTENTTYPE], user),
+    });
   });
-});
 
-describe('signIn', () => {
-  it('should return correct action object', async () => {
-    const response = post('/auth',
-      [HeadersType.CONTENTTYPE],
-      {
-        username: 'user01',
-        password: 'Password1',
-      });
-
-    // Set up mock store
-    const initialState = {};
-    const mockStore = configureStore();
-    const store = mockStore(initialState);
-
-    // dispatch the action through the mock store and
-    // get the result action to compare with the expected response
-    await store.dispatch(signIn({
+  it('should create SIGN_IN when signIn is called', async () => {
+    const credential = {
       username: 'user01',
       password: 'Password1',
-    }));
+    };
+    store.dispatch(signIn(credential));
     const actions = store.getActions();
-    const actionTriggered = actions.find(action => action.type === UsersAction.SIGN_IN);
-    expect(actionTriggered.promise).toEqual(response);
+    expect(actions[0]).toMatchObject({
+      type: UsersAction.SIGN_IN,
+      promise: post('/auth', [HeadersType.CONTENTTYPE], credential),
+    });
   });
-});
 
-describe('signOut', () => {
-  it('should return correct action object', () => {
-    const response = null;
-
-    // Set up mock store
-    const initialState = {};
-    const mockStore = configureStore();
-    const store = mockStore(initialState);
-
-    store.dispatch(signOut());
-    const actions = store.getActions();
-    const actionTriggered = actions.find(action => action.type === UsersAction.SIGN_OUT);
-    expect(actionTriggered).toHaveLength(1);
-  });
-});
-
-describe('getUserData', () => {
-  it('should return correct action object', () => {
-    const response = get('/users', [HeadersType.AUTHORIZATION]);
-
-    // Set up mock store
-    const initialState = {};
-    const mockStore = configureStore();
-    const store = mockStore(initialState);
-
+  it('should create GET_USER_DATA when getUserData is called', async () => {
     store.dispatch(getUserData());
     const actions = store.getActions();
-    const actionTriggered = actions.find(action => action.type === UsersAction.GET_USER_DATA);
-    expect(actionTriggered.promise).toEqual(response);
+    expect(actions[0]).toMatchObject({
+      type: UsersAction.GET_USER_DATA,
+      promise: get('/users', [HeadersType.AUTHORIZATION]),
+    });
+  });
+
+  it('should create SIGN_OUT when signOut is called', () => {
+    store.dispatch(signOut());
+    const actions = store.getActions();
+    expect(actions[0]).toMatchObject({
+      type: UsersAction.SIGN_OUT,
+    });
   });
 });

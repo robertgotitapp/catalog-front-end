@@ -1,75 +1,51 @@
 import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import { addCategory, getCategories, selectCurrentCategory } from '../categories';
 import { CategoriesAction, HeadersType } from '../../utils/const';
 import { post, get } from '../../utils/requests';
-import customMiddleware from '../../middlewares';
 
-const middlewares = [customMiddleware];
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
 
-describe('addCategory', () => {
-  it('should return correct action object', async () => {
-    const response = post('/categories',
-      [HeadersType.CONTENTTYPE, HeadersType.AUTHORIZATION],
-      {
-        name: 'Category 1',
-        description: 'Description of Category 1',
-      });
+describe('actions/categories', () => {
+  const store = mockStore({});
 
-    // Set up mock store
-    const initialState = {};
-    const mockStore = configureStore(middlewares);
-    const store = mockStore(initialState);
-    // const spy = jest.spyOn(mockStore.dispatch, 'addCategory');
+  beforeEach(() => {
+    store.clearActions();
+  });
 
-    // dispatch the action through the mock store and
-    // get the result action to compare with the expected response
-    await mockStore.dispatch(addCategory({
+  it('should create ADD_CATEGORY when addCategory is called', async () => {
+    store.dispatch(addCategory({
       name: 'Category 1',
       description: 'Description of Category 1',
     }));
-
-    expect(spy.type).toBe(CategoriesAction.ADD_CATEGORY);
-    // const actions = store.getActions();
-    // const actionTriggered = actions.find(action
-    // => action.type === CategoriesAction.ADD_CATEGORY);
-    // expect(actionTriggered.promise).toEqual(response);
-  });
-});
-
-describe('getCategories', () => {
-  it('should return correct action object', async () => {
-    const response = get('/categories?offset=0&limit=10');
-
-    // Set up mock store
-    const initialState = {};
-    const mockStore = configureStore();
-    const store = mockStore(initialState);
-
-    // dispatch the action through the mock store and
-    // get the result action to compare with the expected response
-    await store.dispatch(getCategories(0, 10));
     const actions = store.getActions();
-    const actionTriggered = actions.find(action => action.type === CategoriesAction.GET_CATEGORIES);
-    expect(actionTriggered.promise).toEqual(response);
+    expect(actions[0]).toMatchObject({
+      type: CategoriesAction.ADD_CATEGORY,
+      promise: post('/categories',
+        [HeadersType.CONTENTTYPE, HeadersType.AUTHORIZATION],
+        {
+          name: 'Category 1',
+          description: 'Description of Category 1',
+        }),
+    });
   });
-});
 
-describe('selectCurrentCategory', () => {
-  it('should return correct action object', async () => {
-    const response = { currentCategory: 2 };
-
-    // Set up mock store
-    const initialState = {};
-    const mockStore = configureStore();
-    const store = mockStore(initialState);
-
-    // dispatch the action through the mock store and
-    // get the result action to compare with the expected response
-    await store.dispatch(selectCurrentCategory(2));
+  it('should create GET_CATEGORIES when getCategories is called', async () => {
+    store.dispatch(getCategories(0, 10));
     const actions = store.getActions();
-    const actionTriggered = actions.find(
-      action => action.type === CategoriesAction.SELECT_CURRENT_CATEGORY,
-    );
-    expect(actionTriggered.payload).toEqual(response);
+    expect(actions[0]).toMatchObject({
+      type: CategoriesAction.GET_CATEGORIES,
+      promise: get('/categories?offset=0&limit=10'),
+    });
+  });
+
+  it('should create SELECT_CURRENT_CATEGORY when selectCurrentCategory is called', () => {
+    store.dispatch(selectCurrentCategory(1));
+    const actions = store.getActions();
+    expect(actions[0]).toMatchObject({
+      type: CategoriesAction.SELECT_CURRENT_CATEGORY,
+      payload: { currentCategory: 1 },
+    });
   });
 });
