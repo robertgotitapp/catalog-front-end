@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
-import { signUp, signIn, getUserData } from '../../actions/users';
+import {
+  signUp, signIn, getUserData, loadCurrentUserData,
+} from '../../actions/users';
 import { REGEX } from '../../utils/const';
 
 export class SignUpPage extends Component {
@@ -136,7 +138,7 @@ export class SignUpPage extends Component {
 }
 
 const mapDispatchToProps = {
-  signUp, signIn, getUserData,
+  signUp, signIn, getUserData, loadCurrentUserData,
 };
 
 export default connect(null, mapDispatchToProps)(SignUpPage);

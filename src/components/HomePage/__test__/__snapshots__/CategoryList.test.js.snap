@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/CategoryList should render correctly 1`] = `
+<Card
+  body={false}
+>
+  <CardBody>
+    <CardTitle>
+      Categories
+    </CardTitle>
+  </CardBody>
+  <ForwardRef>
+    <Nav
+      className="flex-column"
+      fill={false}
+      justify={false}
+      variant="pills"
+    >
+      <NavItem
+        key="1"
+      >
+        <NavLink
+          as={[Function]}
+          disabled={false}
+          eventKey="1"
+          name="1"
+          onClick={[Function]}
+        >
+          Laptop
+        </NavLink>
+      </NavItem>
+      <NavItem
+        key="2"
+      >
+        <NavLink
+          as={[Function]}
+          disabled={false}
+          eventKey="2"
+          name="2"
+          onClick={[Function]}
+        >
+          Books
+        </NavLink>
+      </NavItem>
+      <NavItem
+        key="3"
+      >
+        <NavLink
+          as={[Function]}
+          disabled={false}
+          eventKey="3"
+          name="3"
+          onClick={[Function]}
+        >
+          Speaker
+        </NavLink>
+      </NavItem>
+    </Nav>
+  </ForwardRef>
+</Card>
+`;

@@ -9,7 +9,6 @@ import reducer from './reducers';
 import middleware from './middlewares';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
 const store = createStore(reducer, composeEnhancers(middleware));
 
 ReactDOM.render(

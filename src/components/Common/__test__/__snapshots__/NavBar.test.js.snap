@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/NavBar when user is logged in should render correctly 1`] = `
+<div>
+  <Bootstrap(undefined)
+    bg="light"
+    variant="light"
+  >
+    <NavbarBrand>
+      <img
+        alt="Got It Logo"
+        className="d-inline-block align-top logo"
+        src="logo.jpeg"
+      />
+    </NavbarBrand>
+    <Nav
+      className="mr-auto"
+      fill={false}
+      justify={false}
+    >
+      <NavItem
+        className="navItem"
+      >
+        <Link
+          name="home"
+          to="/categories/1/items/1"
+        >
+          Home
+        </Link>
+      </NavItem>
+      <NavItem
+        className="navItem"
+      >
+        <Link
+          name="signin"
+          to="/signin"
+        >
+          Sign In
+        </Link>
+      </NavItem>
+      <NavItem
+        className="navItem"
+      >
+        <Link
+          name="signup"
+          to="/signup"
+        >
+          Sign Up
+        </Link>
+      </NavItem>
+    </Nav>
+  </Bootstrap(undefined)>
+</div>
+`;
+
+exports[`components/NavBar when user is not logged in should render correctly 1`] = `
+<div>
+  <Bootstrap(undefined)
+    bg="light"
+    variant="light"
+  >
+    <NavbarBrand>
+      <img
+        alt="Got It Logo"
+        className="d-inline-block align-top logo"
+        src="logo.jpeg"
+      />
+    </NavbarBrand>
+    <Nav
+      className="mr-auto"
+      fill={false}
+      justify={false}
+    >
+      <NavItem
+        className="navItem"
+      >
+        <Link
+          name="home"
+          to="/categories/1/items/1"
+        >
+          Home
+        </Link>
+      </NavItem>
+      <NavItem
+        className="navItem"
+      >
+        <Link
+          name="signin"
+          to="/signin"
+        >
+          Sign In
+        </Link>
+      </NavItem>
+      <NavItem
+        className="navItem"
+      >
+        <Link
+          name="signup"
+          to="/signup"
+        >
+          Sign Up
+        </Link>
+      </NavItem>
+    </Nav>
+  </Bootstrap(undefined)>
+</div>
+`;
